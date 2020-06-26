@@ -8,7 +8,7 @@ import java.sql.SQLException;
 public class DatabaseConnection {
 
     private static Connection dbConnection = null;
-
+    
     private static final String protocol = "jdbc";
     private static final String vendorName = "mysql";
     private static final String ipAddress = "3.227.166.251";
