@@ -1,7 +1,6 @@
 package Infrastructure;
 
 import com.mysql.jdbc.Connection;
-
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
@@ -19,7 +18,7 @@ public class DatabaseConnection {
 
     public static Connection connectToDatabase() {
         try {
-            dbConnection = (Connection) DriverManager.getConnection(buildJdbcUrl(), username, password);
+            dbConnection = (Connection)DriverManager.getConnection(buildJdbcUrl(), username, password);
             System.out.println("Connection Successful");
             return dbConnection;
         }
