@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane prefHeight="800.0" prefWidth="1000.0" style="-fx-background-color: #63768D;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Main.MainScreenController">
+   <children>
+      <VBox layoutX="235.0" layoutY="108.0" prefHeight="600.0" prefWidth="531.0">
+         <children>
+            <HBox prefHeight="200.0" prefWidth="295.0">
+               <children>
+                  <VBox prefHeight="150.0" prefWidth="574.0">
+                     <children>
+                        <HBox alignment="CENTER" prefHeight="150.0" prefWidth="531.0">
+                           <children>
+                              <ImageView fx:id="imgViewAppointments" fitHeight="125.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="45.0" prefWidth="295.0">
+                           <children>
+                              <Button fx:id="btnAppointments" mnemonicParsing="false" onAction="#onActionBtnAppointments" style="-fx-background-color: #FDFFF7;" text="Appointments" />
+                           </children>
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <VBox alignment="CENTER" prefHeight="150.0" prefWidth="606.0">
+                     <children>
+                        <HBox alignment="CENTER" prefHeight="150.0" prefWidth="531.0">
+                           <children>
+                              <ImageView fx:id="imgViewCustomers" fitHeight="125.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="41.0" prefWidth="295.0">
+                           <children>
+                              <Button fx:id="btnCustomers" mnemonicParsing="false" onAction="#onActionBtnCustomers" style="-fx-background-color: FDFFF7;" text="Customers" />
+                           </children>
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <VBox prefHeight="150.0" prefWidth="596.0">
+                     <children>
+                        <HBox alignment="CENTER" prefHeight="150.0" prefWidth="295.0">
+                           <children>
+                              <ImageView fx:id="imgViewReports" fitHeight="125.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="41.0" prefWidth="295.0">
+                           <children>
+                              <Button fx:id="btnReports" mnemonicParsing="false" onAction="#onActionBtnReports" style="-fx-background-color: FDFFF7;" text="Reports" />
+                           </children>
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <Button fx:id="btnLogout" layoutX="885.0" layoutY="34.0" mnemonicParsing="false" onAction="#onActionBtnLogout" style="-fx-background-color: FDFFF7;" text="Logout">
+         <font>
+            <Font name="Segoe UI" size="16.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
