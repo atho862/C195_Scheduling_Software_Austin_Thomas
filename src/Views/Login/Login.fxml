@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="800.0" prefWidth="1000.0" style="-fx-background-color: #63768D;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Login.LoginController">
+   <children>
+      <VBox layoutX="193.0" layoutY="238.0" prefHeight="354.0" prefWidth="615.0">
+         <children>
+            <HBox alignment="CENTER" fillHeight="false" prefHeight="199.0" prefWidth="538.0">
+               <children>
+                  <GridPane prefHeight="88.0" prefWidth="456.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="221.0" minWidth="10.0" prefWidth="125.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="331.0" minWidth="10.0" prefWidth="331.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label fx:id="lblUsername" alignment="CENTER_RIGHT" prefHeight="51.0" prefWidth="169.0" text="Username" textFill="WHITE">
+                           <font>
+                              <Font name="Segoe UI Bold" size="18.0" />
+                           </font>
+                           <padding>
+                              <Insets right="15.0" />
+                           </padding>
+                        </Label>
+                        <Label fx:id="lblPassword" alignment="CENTER_RIGHT" prefHeight="45.0" prefWidth="169.0" text="Password" textFill="WHITE" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="Segoe UI Bold" size="18.0" />
+                           </font>
+                           <padding>
+                              <Insets right="15.0" />
+                           </padding>
+                        </Label>
+                        <TextField fx:id="txtUsername" maxWidth="315.0" prefHeight="35.0" prefWidth="315.0" promptText="Username" GridPane.columnIndex="1">
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin>
+                        </TextField>
+                        <PasswordField fx:id="txtPassword" maxWidth="315.0" prefHeight="35.0" prefWidth="315.0" promptText="Password" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin>
+                        </PasswordField>
+                     </children>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </GridPane>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" prefHeight="55.0" prefWidth="569.0">
+               <children>
+                  <Button fx:id="btnLogin" mnemonicParsing="false" onAction="#onActionBtnLogin" prefWidth="100.0" style="-fx-background-color: #FDFFF7;" text="Login">
+                     <HBox.margin>
+                        <Insets right="75.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnExit" alignment="CENTER" mnemonicParsing="false" onAction="#onActionBtnExit" prefWidth="100.0" style="-fx-background-color: #FDFFF7;" text="Exit">
+                     <HBox.margin>
+                        <Insets right="125.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <HBox alignment="CENTER" layoutX="440.0" layoutY="195.0" prefHeight="39.0" prefWidth="225.0">
+         <children>
+            <Label alignment="CENTER" text="The">
+               <font>
+                  <Font name="Segoe UI Italic" size="24.0" />
+               </font>
+               <HBox.margin>
+                  <Insets right="5.0" />
+               </HBox.margin>
+            </Label>
+            <Label text="Scheduler">
+               <font>
+                  <Font name="Segoe UI Bold" size="36.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>
