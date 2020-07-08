@@ -1,4 +1,4 @@
-package Contracts.Daos;
+package Domain.Daos;
 
 public class CustomerDao {
 }

@@ -1,6 +1,6 @@
 package Contracts.Interfaces.Services;
 
-import Contracts.Daos.LoginDao;
+import Domain.Daos.LoginDao;
 import javafx.event.ActionEvent;
 import java.io.IOException;
 import java.sql.SQLException;

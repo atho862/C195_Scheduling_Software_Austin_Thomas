@@ -1,6 +1,6 @@
 package Controllers.Login;
 
-import Contracts.Daos.LoginDao;
+import Domain.Daos.LoginDao;
 import Contracts.Interfaces.Services.ILoginService;
 import Domain.Services.LoginService;
 import javafx.event.ActionEvent;
@@ -10,7 +10,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.io.IOException;

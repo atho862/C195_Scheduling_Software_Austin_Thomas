@@ -1,14 +1,269 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="Controllers.Appointment.EditAppointmentController"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="800.0" prefWidth="1000.0" style="-fx-background-color: #63768D;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Appointment.EditAppointmentController">
+   <children>
+      <GridPane layoutX="222.0" layoutY="167.0" prefHeight="450.0" prefWidth="510.0">
+         <children>
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label fx:id="lblTitle" text="Title" textFill="#fdfff7">
+                     <font>
+                        <Font name="Segoe UI Bold" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+               <GridPane.margin>
+                  <Insets right="10.0" />
+               </GridPane.margin>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
+               <children>
+                  <Label fx:id="lblDescription" text="Description" textFill="#fdfff7">
+                     <font>
+                        <Font name="Segoe UI Bold" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets right="10.0" />
+               </padding>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2">
+               <children>
+                  <Label fx:id="lblType" text="Type" textFill="#fdfff7">
+                     <font>
+                        <Font name="Segoe UI Bold" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+               <GridPane.margin>
+                  <Insets right="10.0" />
+               </GridPane.margin>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
+               <children>
+                  <TextField fx:id="txtTitle" prefHeight="35.0" prefWidth="350.0" promptText="Title">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <children>
+                  <TextArea fx:id="txtDescription" maxHeight="70.0" prefHeight="70.0" prefWidth="350.0" promptText="Description" style="-fx-background-color: #FDFFF7;">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </TextArea>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <children>
+                  <ChoiceBox fx:id="drpdwnType" prefWidth="350.0" style="-fx-background-color: #FDFFF7;">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </ChoiceBox>
+               </children>
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="3">
+               <children>
+                  <Label fx:id="lblCustomer" text="Customer" textFill="#fdfff7">
+                     <font>
+                        <Font name="Segoe UI Bold" size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <children>
+                  <ChoiceBox fx:id="drpdwnCustomer" prefWidth="350.0" style="-fx-background-color: #FDFFF7;">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </ChoiceBox>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="4">
+               <children>
+                  <Label fx:id="lblLocation" text="Location" textFill="#fdfff7">
+                     <font>
+                        <Font name="Segoe UI Bold" size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="350.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <children>
+                  <TextField fx:id="txtLocation" prefWidth="350.0" promptText="Location" />
+               </children>
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="5">
+               <children>
+                  <Label fx:id="lblContact" text="Contact" textFill="#fdfff7">
+                     <font>
+                        <Font name="Segoe UI Bold" size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+               <children>
+                  <TextField fx:id="txtContact" prefWidth="350.0" promptText="Contact">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="6">
+               <children>
+                  <Label fx:id="lblUrl" text="URL" textFill="#fdfff7">
+                     <font>
+                        <Font name="Segoe UI Bold" size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+               <children>
+                  <TextField fx:id="txtUrl" prefWidth="350.0" promptText="URL">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="7">
+               <children>
+                  <Label fx:id="lblStart" text="Start" textFill="#fdfff7">
+                     <font>
+                        <Font name="Segoe UI Bold" size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
+               <children>
+                  <DatePicker fx:id="dateStart" prefHeight="31.0" prefWidth="210.0" promptText="Appointment Start Time" style="-fx-background-color: #FDFFF7;">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </DatePicker>
+                  <ChoiceBox fx:id="drpdwnStartHours" prefHeight="31.0" prefWidth="60.0" style="-fx-background-color: #FDFFF7;">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </ChoiceBox>
+                  <ChoiceBox fx:id="drpdwnStartMinutes" prefWidth="60.0" style="-fx-background-color: #FDFFF7;">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </ChoiceBox>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="8">
+               <children>
+                  <Label fx:id="lblEnd" text="End" textFill="#fdfff7">
+                     <font>
+                        <Font name="Segoe UI Bold" size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="8">
+               <children>
+                  <DatePicker fx:id="dateEnd" prefHeight="31.0" prefWidth="210.0" promptText="Appointment End Time" style="-fx-background-color: #FDFFF7;">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </DatePicker>
+                  <ChoiceBox fx:id="drpdwnEndHours" prefWidth="60.0" style="-fx-background-color: #FDFFF7;">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </ChoiceBox>
+                  <ChoiceBox fx:id="drpdwnEndMinutes" prefWidth="60.0" style="-fx-background-color: #FDFFF7;">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </ChoiceBox>
+               </children>
+            </HBox>
+         </children>
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="248.0" minWidth="10.0" prefWidth="120.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="417.0" minWidth="10.0" prefWidth="390.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints maxHeight="45.0" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="90.0" minHeight="10.0" prefHeight="90.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="45.0" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="45.0" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="45.0" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="45.0" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="45.0" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="45.0" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="45.0" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+      </GridPane>
+      <Button fx:id="btnLogout" layoutX="905.0" layoutY="14.0" mnemonicParsing="false" onAction="#onActionBtnLogout" style="-fx-background-color: #FDFFF7;" text="Logout">
+         <font>
+            <Font name="Segoe UI" size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnBack" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#onActionBtnBack" style="-fx-background-color: #FDFFF7;" text="Back">
+         <font>
+            <Font name="Segoe UI" size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnSave" layoutX="791.0" layoutY="730.0" mnemonicParsing="false" onAction="#onActionBtnSave" style="-fx-background-color: #FDFFF7;" text="Save">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnCancel" layoutX="881.0" layoutY="730.0" mnemonicParsing="false" onAction="#onActionBtnCancel" prefHeight="39.0" style="-fx-background-color: #fdfff7;" text="Cancel">
+         <font>
+            <Font name="Segoe UI" size="18.0" />
+         </font>
+      </Button>
+      <Label layoutX="401.0" layoutY="95.0" text="Edit Appointment" textFill="#fdfff7">
+         <font>
+            <Font name="Segoe UI Bold Italic" size="24.0" />
+         </font>
+      </Label>
+   </children>
 </AnchorPane>

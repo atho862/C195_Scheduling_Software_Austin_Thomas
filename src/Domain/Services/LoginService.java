@@ -1,6 +1,6 @@
 package Domain.Services;
 
-import Contracts.Daos.LoginDao;
+import Domain.Daos.LoginDao;
 import Contracts.Interfaces.Repositories.IUserRepository;
 import Contracts.Interfaces.Services.ILoginService;
 import Contracts.Statics.UserStatics;

@@ -1,14 +1,110 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="Controllers.Appointment.AppointmentListController"
-            prefHeight="400.0" prefWidth="600.0">
 
+<AnchorPane prefHeight="800.0" prefWidth="1000.0" style="-fx-background-color: #63768D;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Appointment.AppointmentListController">
+   <children>
+      <Button fx:id="btnLogout" layoutX="905.0" layoutY="14.0" mnemonicParsing="false" onAction="#onActionBtnLogout" style="-fx-background-color: #FDFFF7;" text="Logout">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Label layoutX="421.0" layoutY="53.0" text="Appointments" textFill="#fdfff7">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+      <VBox layoutX="53.0" layoutY="122.0" prefHeight="638.0" prefWidth="909.0">
+         <children>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <RadioButton fx:id="btnRadioViewAllAppointments" mnemonicParsing="false" onAction="#onActionViewAllAppointments" text="View All Appointments" textFill="#fdfff7">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="tglGroupAppointmentFilter" />
+                           </toggleGroup>
+                           <font>
+                              <Font name="Segoe UI Bold Italic" size="15.0" />
+                           </font>
+                        </RadioButton>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <RadioButton fx:id="btnRadioViewByWeek" mnemonicParsing="false" onAction="#onActionBtnRadioViewByWeek" text="View by Week" textFill="#fdfff7" toggleGroup="$tglGroupAppointmentFilter">
+                           <font>
+                              <Font name="System Bold Italic" size="15.0" />
+                           </font>
+                        </RadioButton>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <RadioButton fx:id="btnRadioViewByMonth" mnemonicParsing="false" onAction="#onActionBtnRadioViewByMonth" text="View by Month" textFill="#fdfff7" toggleGroup="$tglGroupAppointmentFilter">
+                           <font>
+                              <Font name="System Bold Italic" size="15.0" />
+                           </font>
+                        </RadioButton>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="60.0" prefWidth="266.0">
+                     <children>
+                        <DatePicker fx:id="datePicker" onAction="#onActionDatePicker" />
+                     </children>
+                  </HBox>
+               </children>
+            </HBox>
+            <HBox prefHeight="558.0" prefWidth="909.0">
+               <children>
+                  <TableView fx:id="tblViewAppointments" prefHeight="518.0" prefWidth="919.0">
+                    <columns>
+                      <TableColumn fx:id="tblColumnId" prefWidth="48.0" text="Id" />
+                      <TableColumn fx:id="tblColumnCustomer" prefWidth="102.0" text="Customer" />
+                        <TableColumn fx:id="tblColumnTitle" prefWidth="125.0" text="Title" />
+                        <TableColumn fx:id="tblColumnDescription" minWidth="3.0" prefWidth="100.0" text="Description" />
+                        <TableColumn fx:id="tblColumnType" minWidth="0.0" prefWidth="67.0" text="Type" />
+                        <TableColumn fx:id="tblColumnLocation" minWidth="8.0" prefWidth="74.0" text="Location" />
+                        <TableColumn fx:id="tblColumnContact" prefWidth="86.0" text="Contact" />
+                        <TableColumn fx:id="tblColumnUrl" prefWidth="86.0" text="Url" />
+                        <TableColumn fx:id="tblColumnStart" prefWidth="108.0" text="Start" />
+                        <TableColumn fx:id="tblColumnEnd" prefWidth="112.0" text="End" />
+                    </columns>
+                  </TableView>
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="60.0" prefWidth="160.0">
+                     <children>
+                        <Button fx:id="btnAddAppointment" mnemonicParsing="false" onAction="#onActionBtnAddAppointment" style="-fx-background-color: #FDFFF7;" text="Add Appointment" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="60.0" prefWidth="174.0">
+                     <children>
+                        <Button fx:id="btnEditAppointment" mnemonicParsing="false" onAction="#onActionBtnEditAppointment" style="-fx-background-color: #FDFFF7;" text="Edit Appointment" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="60.0" prefWidth="393.0" />
+                  <HBox alignment="CENTER" prefHeight="60.0" prefWidth="181.0">
+                     <children>
+                        <Button fx:id="btnDeleteAppointment" mnemonicParsing="false" onAction="#onActionBtnDeleteAppointment" style="-fx-background-color: #FDFFF7;" text="Delete Appointment" />
+                     </children>
+                  </HBox>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <Button fx:id="btnBack" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#onActionBtnBack" style="-fx-background-color: #FDFFF7;" text="Back">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+   </children>
 </AnchorPane>
