@@ -11,10 +11,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
@@ -22,6 +22,7 @@ public class LoginController implements Initializable {
     Stage stage;
     Parent root;
     ILoginService loginService = new LoginService();
+    String language;
 
     @FXML
     private TextField txtUsername;
@@ -42,6 +43,12 @@ public class LoginController implements Initializable {
     private PasswordField txtPassword;
 
     @FXML
+    private Label lblLogoThe;
+
+    @FXML
+    private Label lblLogoScheduler;
+
+    @FXML
     void onActionBtnLogin(ActionEvent event) throws IOException, SQLException {
         String username = txtUsername.getText();
         String password = txtPassword.getText();
@@ -56,17 +63,36 @@ public class LoginController implements Initializable {
             stage.show();
         }
         else {
-            new Alert(Alert.AlertType.ERROR, "Unable to login: Invalid username/password combination").show();
+            if (language.equals("spa")){
+                new Alert(Alert.AlertType.ERROR,"No se puede iniciar sesión: combinación de nombre de usuario / contraseña no válida").show();
+            }
+            else {
+                new Alert(Alert.AlertType.ERROR, "Unable to login: Invalid username/password combination").show();
+            }
         }
     }
 
     @FXML
     void onActionBtnExit(ActionEvent event) {
-
+        System.exit(0);
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        language = Locale.getDefault().getISO3Language();
+        if (language.equals("spa")) {
+            convertLoginScreenToSpanish();
+        }
+    }
 
+    private void convertLoginScreenToSpanish(){
+        lblUsername.setText("Nombre de usuario");
+        txtUsername.setPromptText(lblUsername.getText());
+        lblPassword.setText("Contraseña");
+        txtPassword.setPromptText(lblPassword.getText());
+        lblLogoThe.setText("El");
+        lblLogoScheduler.setText("Planificador");
+        btnLogin.setText("Iniciar Sesión");
+        btnExit.setText("Salida");
     }
 }

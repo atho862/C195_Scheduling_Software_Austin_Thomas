@@ -82,7 +82,7 @@
       </VBox>
       <HBox alignment="CENTER" layoutX="440.0" layoutY="195.0" prefHeight="39.0" prefWidth="225.0">
          <children>
-            <Label alignment="CENTER" text="The">
+            <Label fx:id="lblLogoThe" alignment="CENTER" text="The">
                <font>
                   <Font name="Segoe UI Italic" size="24.0" />
                </font>
@@ -90,7 +90,7 @@
                   <Insets right="5.0" />
                </HBox.margin>
             </Label>
-            <Label text="Scheduler">
+            <Label fx:id="lblLogoScheduler" text="Scheduler">
                <font>
                   <Font name="Segoe UI Bold" size="36.0" />
                </font>
