@@ -1,16 +1,14 @@
 package Controllers.Appointment;
 
-import Contracts.Interfaces.Repositories.ICustomerRepository;
 import Contracts.Interfaces.Services.IAppointmentService;
 import Contracts.Interfaces.Services.ICustomerService;
 import Contracts.Interfaces.Services.ILoginService;
 import Contracts.Statics.AppointmentStatics;
 import Domain.Daos.AppointmentDao;
+import Domain.Helpers.AppointmentHelper;
 import Domain.Services.AppointmentService;
 import Domain.Services.CustomerService;
 import Domain.Services.LoginService;
-import Infrastructure.Models.Appointment;
-import Infrastructure.Repositories.CustomerRepository;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -24,10 +22,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.ResourceBundle;
 
 public class AddAppointmentController implements Initializable {
@@ -134,6 +130,18 @@ public class AddAppointmentController implements Initializable {
 
     @FXML
     void onActionBtnSave(ActionEvent event) throws SQLException, IOException {
+        int appointmentStartHour = Integer.valueOf(drpdwnStartHours.getValue());
+        int appointmentEndHour = Integer.valueOf(drpdwnEndHours.getValue());
+
+        if (!AppointmentHelper.isDuringBusinessHours(appointmentStartHour)){
+            new Alert(Alert.AlertType.ERROR, "Your appointment is currently scheduled to start outside of business hours. Please schedule a time between 9am and 5pm.").show();
+            return;
+        }
+        if (!AppointmentHelper.isDuringBusinessHours(appointmentEndHour)){
+            new Alert(Alert.AlertType.ERROR, "Your appointment is currently scheduled to end outside business hours. Please schedule a time between 9am and 5pm.").show();
+            return;
+        }
+
         String title = txtTitle.getText();
         String description = txtDescription.getText();
         String type = drpdwnType.getValue();
@@ -141,8 +149,8 @@ public class AddAppointmentController implements Initializable {
         String location = txtLocation.getText();
         String contact = txtContact.getText();
         String url = txtUrl.getText();
-        LocalDateTime start = getStartDateForAppointment();
-        LocalDateTime end = getEndDateForAppointment();
+        LocalDateTime start = AppointmentHelper.getLocalDateTimeForAppointment(dateStart.getValue(), drpdwnStartHours.getValue(), drpdwnStartMinutes.getValue());
+        LocalDateTime end = AppointmentHelper.getLocalDateTimeForAppointment(dateEnd.getValue(), drpdwnEndHours.getValue(), drpdwnEndMinutes.getValue());
 
         AppointmentDao appointmentDao = new AppointmentDao(0, customerName, title, description, location,
                 contact, type, url, start, end);
@@ -182,13 +190,15 @@ public class AddAppointmentController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        drpdwnType.setItems(getAppointmentTypes());
-        hours = AppointmentStatics.setHours();
-        minutes = AppointmentStatics.setMinutes();
+        drpdwnType.setItems(AppointmentHelper.setTypes());
+        hours = AppointmentHelper.setHours();
+        minutes = AppointmentHelper.setMinutes();
         drpdwnStartHours.setItems(hours);
         drpdwnStartMinutes.setItems(minutes);
+        drpdwnStartMinutes.setValue("00");
         drpdwnEndHours.setItems(hours);
         drpdwnEndMinutes.setItems(minutes);
+        drpdwnEndMinutes.setValue("00");
     }
 
     private ObservableList<String> getAppointmentTypes(){

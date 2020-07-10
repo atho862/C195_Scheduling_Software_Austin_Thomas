@@ -55,12 +55,17 @@ public class AppointmentService implements IAppointmentService {
     }
 
     @Override
-    public void updateAppointment(AppointmentDao appointmentDao) {
-
+    public int updateAppointment(AppointmentDao appointmentDao) throws SQLException {
+        Appointment appointment = MapAppointmentDaoToAppointment.Map(appointmentDao);
+        appointment.setLastUpdatedBy(UserStatics.getCurrentUserName());
+        appointment.setLastUpdate(LocalDateTime.now());
+        int updatedAppointments = appointmentRepository.updateAppointment(appointment);
+        return updatedAppointments;
     }
 
     @Override
-    public boolean deleteAppointment(int appointmentId) {
-        return false;
+    public int deleteAppointment(int appointmentId) throws SQLException {
+        int deletedAppointments = appointmentRepository.deleteAppointment(appointmentId);
+        return deletedAppointments;
     }
 }

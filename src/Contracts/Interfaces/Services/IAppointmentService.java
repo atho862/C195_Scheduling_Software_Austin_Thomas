@@ -9,6 +9,6 @@ public interface IAppointmentService {
     int saveAppointment(AppointmentDao appointmentDao) throws SQLException;
     ObservableList<AppointmentDao> getAppointmentsForUser(int userId) throws SQLException;
     AppointmentDao getAppointmentByAppointmentId(int appointmentId);
-    void updateAppointment(AppointmentDao appointmentDao);
-    boolean deleteAppointment(int appointmentId);
+    int updateAppointment(AppointmentDao appointmentDao) throws SQLException;
+    int deleteAppointment(int appointmentId) throws SQLException;
 }

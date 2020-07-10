@@ -133,7 +133,7 @@ public class AppointmentRepository implements IAppointmentRepository {
 
         PreparedStatement statement = (PreparedStatement) DatabaseConnection.dbConnection.prepareStatement(
                 "UPDATE appointment SET title = ?, description = ?, location = ?, contact = ?, type = ?, url = ?, " +
-                        "start = ?, end = ?, lastUpdate = ?, lastUpdatedBy = ? WHERE appointmentId = ?");
+                        "start = ?, end = ?, lastUpdate = ?, lastUpdateBy = ? WHERE appointmentId = ?");
 
         statement.setString(1, appointment.getTitle());
         statement.setString(2, appointment.getDescription());
@@ -141,13 +141,19 @@ public class AppointmentRepository implements IAppointmentRepository {
         statement.setString(4, appointment.getContact());
         statement.setString(5, appointment.getType());
         statement.setString(6, appointment.getUrl());
-        statement.setDate(7, Date.valueOf(String.valueOf(appointment.getStart())));
-        statement.setDate(8, Date.valueOf(String.valueOf(appointment.getEnd())));
-        statement.setDate(9, Date.valueOf(String.valueOf(appointment.getLastUpdate())));
+        statement.setTimestamp(7, Timestamp.valueOf(appointment.getStart()));
+        statement.setTimestamp(8, Timestamp.valueOf(appointment.getEnd()));
+        statement.setTimestamp(9, Timestamp.valueOf(appointment.getLastUpdate()));
         statement.setString(10, appointment.getLastUpdatedBy());
         statement.setInt(11, appointment.getAppointmentId());
-
-        return statement.executeUpdate();
+        try {
+            int updatedAppointments = statement.executeUpdate();
+            return updatedAppointments;
+        }
+        catch (SQLException e){
+            System.out.println(e);
+            return 0;
+        }
     }
 
     @Override
@@ -156,7 +162,13 @@ public class AppointmentRepository implements IAppointmentRepository {
                 "DELETE FROM appointment WHERE appointmentId = ?");
 
         statement.setInt(1, appointmentId);
-
-        return statement.executeUpdate();
+        try {
+            int deletedAppointments = statement.executeUpdate();
+            return deletedAppointments;
+        }
+        catch (SQLException e){
+            System.out.println(e);
+            return 0;
+        }
     }
 }

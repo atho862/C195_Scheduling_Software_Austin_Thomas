@@ -165,7 +165,12 @@ public class AppointmentListController implements Initializable {
             return;
         }
 
-        appointmentService.deleteAppointment(appointmentDao.getAppointmentId());
+        int deletedRows = appointmentService.deleteAppointment(appointmentDao.getAppointmentId());
+        if (deletedRows == 0){
+            new Alert(Alert.AlertType.ERROR, "There was an error deleting the appointment. Please try again.");
+            return;
+        }
+
         tblViewAppointments.setItems(appointmentService.getAppointmentsForUser(UserStatics.getCurrentUserId()));
     }
 
