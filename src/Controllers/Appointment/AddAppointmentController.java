@@ -3,26 +3,23 @@ package Controllers.Appointment;
 import Contracts.Interfaces.Services.IAppointmentService;
 import Contracts.Interfaces.Services.ICustomerService;
 import Contracts.Interfaces.Services.ILoginService;
-import Contracts.Statics.AppointmentStatics;
-import Domain.Daos.AppointmentDao;
+import Contracts.Statics.UserStatics;
+import Domain.Dtos.AppointmentDto;
 import Domain.Helpers.AppointmentHelper;
+import Domain.Services.NavigationService;
 import Domain.Services.AppointmentService;
 import Domain.Services.CustomerService;
 import Domain.Services.LoginService;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
@@ -30,6 +27,7 @@ public class AddAppointmentController implements Initializable {
 
     Stage stage;
     Parent root;
+    NavigationService navigationService = new NavigationService();
     ICustomerService customerService = new CustomerService();
     ILoginService loginService = new LoginService();
     IAppointmentService appointmentService = new AppointmentService();
@@ -121,24 +119,24 @@ public class AddAppointmentController implements Initializable {
 
     @FXML
     void onActionBtnBack(ActionEvent event) throws IOException {
-        stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource("/Views/Appointment/AppointmentList.fxml"));
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        navigationService.navigateToAppointmentListScreen(event);
     }
 
     @FXML
     void onActionBtnSave(ActionEvent event) throws SQLException, IOException {
-        int appointmentStartHour = Integer.valueOf(drpdwnStartHours.getValue());
-        int appointmentEndHour = Integer.valueOf(drpdwnEndHours.getValue());
+        LocalDateTime start = AppointmentHelper.getLocalDateTimeForAppointment(dateStart.getValue(), drpdwnStartHours.getValue(), drpdwnStartMinutes.getValue());
+        LocalDateTime end = AppointmentHelper.getLocalDateTimeForAppointment(dateEnd.getValue(), drpdwnEndHours.getValue(), drpdwnEndMinutes.getValue());
 
-        if (!AppointmentHelper.isDuringBusinessHours(appointmentStartHour)){
+        if (!AppointmentHelper.isDuringBusinessHours(start.getHour())){
             new Alert(Alert.AlertType.ERROR, "Your appointment is currently scheduled to start outside of business hours. Please schedule a time between 9am and 5pm.").show();
             return;
         }
-        if (!AppointmentHelper.isDuringBusinessHours(appointmentEndHour)){
+        if (!AppointmentHelper.isDuringBusinessHours(end.getHour())){
             new Alert(Alert.AlertType.ERROR, "Your appointment is currently scheduled to end outside business hours. Please schedule a time between 9am and 5pm.").show();
+            return;
+        }
+        if (AppointmentHelper.checkForOverlappingAppointments(start, end, appointmentService.getAppointmentsForUser(UserStatics.getCurrentUserId()))){
+            new Alert(Alert.AlertType.ERROR, "Your appointment conflicts with another scheduled appointment. Please choose another time for this appointment.").show();
             return;
         }
 
@@ -149,19 +147,13 @@ public class AddAppointmentController implements Initializable {
         String location = txtLocation.getText();
         String contact = txtContact.getText();
         String url = txtUrl.getText();
-        LocalDateTime start = AppointmentHelper.getLocalDateTimeForAppointment(dateStart.getValue(), drpdwnStartHours.getValue(), drpdwnStartMinutes.getValue());
-        LocalDateTime end = AppointmentHelper.getLocalDateTimeForAppointment(dateEnd.getValue(), drpdwnEndHours.getValue(), drpdwnEndMinutes.getValue());
 
-        AppointmentDao appointmentDao = new AppointmentDao(0, customerName, title, description, location,
+        AppointmentDto appointmentDto = new AppointmentDto(0, customerName, title, description, location,
                 contact, type, url, start, end);
 
-        int appointmentsAdded = appointmentService.saveAppointment(appointmentDao);
+        int appointmentsAdded = appointmentService.saveAppointment(appointmentDto);
         if (appointmentsAdded == 1){
-            stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
-            root = FXMLLoader.load(getClass().getResource("/Views/Appointment/AppointmentList.fxml"));
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
+            navigationService.navigateToAppointmentListScreen(event);
         }
         else {
             new Alert(Alert.AlertType.ERROR, "Unable to save appointment. Please try again.").show();
@@ -177,11 +169,7 @@ public class AddAppointmentController implements Initializable {
         if (alert.getResult() == ButtonType.NO){
             return;
         }
-        stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource("/Views/Appointment/AppointmentList.fxml"));
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        navigationService.navigateToAppointmentListScreen(event);
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -199,35 +187,5 @@ public class AddAppointmentController implements Initializable {
         drpdwnEndHours.setItems(hours);
         drpdwnEndMinutes.setItems(minutes);
         drpdwnEndMinutes.setValue("00");
-    }
-
-    private ObservableList<String> getAppointmentTypes(){
-        ObservableList<String> appointmentTypes = FXCollections.observableArrayList();
-        appointmentTypes.addAll(AppointmentStatics.initialConsultation, AppointmentStatics.supportCall, AppointmentStatics.salesCall,
-                AppointmentStatics.productImplementation);
-
-        return appointmentTypes;
-    }
-
-    private LocalDateTime getStartDateForAppointment(){
-        LocalDate localDate = dateStart.getValue();
-        String hour = drpdwnStartHours.getValue();
-        String minute = drpdwnStartMinutes.getValue();
-
-        LocalDateTime localDateTime = LocalDateTime.of(localDate.getYear(), localDate.getMonth(), localDate.getDayOfMonth(),
-                Integer.valueOf(hour), Integer.valueOf(minute));
-
-        return localDateTime;
-    }
-
-    private LocalDateTime getEndDateForAppointment(){
-        LocalDate localDate = dateEnd.getValue();
-        String hour = drpdwnEndHours.getValue();
-        String minute = drpdwnEndMinutes.getValue();
-
-        LocalDateTime localDateTime = LocalDateTime.of(localDate.getYear(), localDate.getMonth(), localDate.getDayOfMonth(),
-                Integer.valueOf(hour), Integer.valueOf(minute));
-
-        return localDateTime;
     }
 }

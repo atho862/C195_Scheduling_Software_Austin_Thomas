@@ -1,5 +1,6 @@
 package Infrastructure.Models;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Address {
@@ -9,13 +10,13 @@ public class Address {
     private int cityId;
     private String postalCode;
     private String phone;
-    private Date createDate;
+    private LocalDateTime createDate;
     private String createdBy;
-    private Date lastUpdate;
+    private LocalDateTime lastUpdate;
     private String lastUpdateBy;
 
-    public Address(int id, String address, String address2, int cityId, String postalCode, String phone, Date createdDate,
-                   String createdBy, Date lastUpdate, String lastUpdateBy){
+    public Address(int id, String address, String address2, int cityId, String postalCode, String phone, LocalDateTime createdDate,
+                   String createdBy, LocalDateTime lastUpdate, String lastUpdateBy){
         this.addressId = id;
         this.address = address;
         this.address2 = address2;
@@ -34,9 +35,9 @@ public class Address {
     public int getCityId() { return this.cityId; }
     public String getPostalCode() { return this.postalCode; }
     public String getPhone() { return this.phone; }
-    public Date getCreateDate() { return this.createDate; }
+    public LocalDateTime getCreateDate() { return this.createDate; }
     public String getCreatedBy() { return this.createdBy; }
-    public Date getLastUpdate() { return this.lastUpdate; }
+    public LocalDateTime getLastUpdate() { return this.lastUpdate; }
     public String getLastUpdateBy() { return this.lastUpdateBy; }
 
     public void setAddressId(int addressId){
@@ -63,7 +64,7 @@ public class Address {
         this.phone = phone;
     }
 
-    public void setCreateDate(Date createDate){
+    public void setCreateDate(LocalDateTime createDate){
         this.createDate = createDate;
     }
 
@@ -71,7 +72,7 @@ public class Address {
         this.createdBy = createdBy;
     }
 
-    public void setLastUpdate(Date lastUpdate){
+    public void setLastUpdate(LocalDateTime lastUpdate){
         this.lastUpdate = lastUpdate;
     }
 

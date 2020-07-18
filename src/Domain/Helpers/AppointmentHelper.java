@@ -2,20 +2,21 @@ package Domain.Helpers;
 
 import Contracts.Statics.AppointmentStatics;
 import Contracts.Statics.UserStatics;
+import Domain.Dtos.AppointmentDto;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class AppointmentHelper {
     public static LocalDateTime convertToUtc(LocalDateTime date){
-        date = date.plusHours(UserStatics.getUserOffset());
+        date = date.minusHours(UserStatics.getUserOffset());
         return date;
     }
 
     public static LocalDateTime convertFromUtc(LocalDateTime date){
-        date = date.minusHours(UserStatics.getUserOffset());
+        date = date.plusHours(UserStatics.getUserOffset());
         return date;
     }
 
@@ -56,5 +57,49 @@ public class AppointmentHelper {
                 Integer.valueOf(hour), Integer.valueOf(minute));
 
         return localDateTime;
+    }
+
+    public static ObservableList<Integer> getDatesForThisWeek(LocalDate date){
+        ObservableList<Integer> datesForThisWeek = FXCollections.observableArrayList();
+        int currentDate = date.getDayOfYear();
+        DayOfWeek dayOfWeek = date.getDayOfWeek();
+        if (dayOfWeek == DayOfWeek.MONDAY){
+            datesForThisWeek.addAll(currentDate, currentDate + 1, currentDate + 2, currentDate + 3, currentDate + 4);
+        }
+        if (dayOfWeek == DayOfWeek.TUESDAY){
+            datesForThisWeek.addAll(currentDate - 1, currentDate, currentDate + 1, currentDate + 2, currentDate + 3);
+        }
+        if (dayOfWeek == DayOfWeek.WEDNESDAY) {
+            datesForThisWeek.addAll(currentDate - 2, currentDate - 1, currentDate, currentDate + 1, currentDate + 2);
+        }
+        if (dayOfWeek == DayOfWeek.THURSDAY) {
+            datesForThisWeek.addAll(currentDate - 3, currentDate - 2, currentDate - 1, currentDate, currentDate + 1);
+        }
+        if (dayOfWeek == DayOfWeek.FRIDAY) {
+            datesForThisWeek.addAll(currentDate - 4, currentDate - 3, currentDate - 2, currentDate - 1, currentDate);
+        }
+        if (dayOfWeek == DayOfWeek.SATURDAY){
+            datesForThisWeek.addAll(currentDate + 2, currentDate + 3, currentDate + 4, currentDate + 5, currentDate + 6);
+        }
+        if (dayOfWeek == DayOfWeek.SUNDAY){
+            datesForThisWeek.addAll(currentDate + 1, currentDate + 2, currentDate + 3, currentDate + 4, currentDate + 5);
+        }
+
+        return datesForThisWeek;
+    }
+
+    public static boolean checkForOverlappingAppointments(LocalDateTime start, LocalDateTime end, ObservableList<AppointmentDto> appointments){
+        boolean isOverlapping = false;
+        for (AppointmentDto appointment : appointments
+             ) {
+            if (appointment.getEnd().isBefore(start)){
+                isOverlapping = true;
+            }
+            if (appointment.getStart().isAfter(end)){
+                isOverlapping = true;
+            }
+        }
+
+        return isOverlapping;
     }
 }

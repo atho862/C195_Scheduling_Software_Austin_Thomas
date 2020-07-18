@@ -1,7 +1,9 @@
 package Controllers.Main;
 
 import Contracts.Interfaces.Services.ILoginService;
+import Contracts.Interfaces.Services.INavigationService;
 import Domain.Services.LoginService;
+import Domain.Services.NavigationService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,6 +24,7 @@ public class MainScreenController implements Initializable {
     Stage stage;
     Parent root;
     ILoginService loginService = new LoginService();
+    INavigationService navigationService = new NavigationService();
 
     @FXML
     private ImageView imgViewCustomers;
@@ -55,17 +58,12 @@ public class MainScreenController implements Initializable {
 
     @FXML
     void onActionBtnCustomers(ActionEvent event) throws IOException {
-        stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource("/Views/Customer/CustomerList.fxml"));
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        navigationService.navigateToCustomerListScreen(event);
     }
 
     @FXML
     void onActionBtnReports(ActionEvent event) throws IOException{
-        stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource("/Views/Reports/Reports.fxml"));
+        navigationService.navigateToReportsScreen(event);
     }
 
     @FXML

@@ -171,4 +171,37 @@ public class AppointmentRepository implements IAppointmentRepository {
             return 0;
         }
     }
+
+    @Override
+    public ObservableList<Appointment> getAppointmentsByCustomerId(int customerId) throws SQLException {
+        ObservableList<Appointment> appointments = FXCollections.observableArrayList();
+        PreparedStatement statement = (PreparedStatement) DatabaseConnection.dbConnection.prepareStatement(
+                "SELECT * FROM appointment WHERE customerId = ?");
+
+        statement.setInt(1, customerId);
+        ResultSet resultSet = statement.executeQuery();
+        while (resultSet.next()){
+            int appointmentId = resultSet.getInt("appointmentId");
+            int userId = resultSet.getInt("userId");
+            String title = resultSet.getString("title");
+            String description = resultSet.getString("description");
+            String contact = resultSet.getString("contact");
+            String location = resultSet.getString("location");
+            String type = resultSet.getString("type");
+            String url = resultSet.getString("url");
+            LocalDateTime start = resultSet.getTimestamp("start").toLocalDateTime();
+            LocalDateTime end = resultSet.getTimestamp("end").toLocalDateTime();
+            LocalDateTime createDate = resultSet.getTimestamp("createDate").toLocalDateTime();
+            String createdBy = resultSet.getString("createdBy");
+            LocalDateTime lastUpdate = resultSet.getTimestamp("lastUpdate").toLocalDateTime();
+            String lastUpdateBy = resultSet.getString("lastUpdateBy");
+
+            Appointment appointment = new Appointment(appointmentId, customerId, userId, title, description, location, contact,
+                    type, url, start, end, createDate, createdBy, lastUpdate, lastUpdateBy);
+
+            appointments.add(appointment);
+        }
+
+        return appointments;
+    }
 }

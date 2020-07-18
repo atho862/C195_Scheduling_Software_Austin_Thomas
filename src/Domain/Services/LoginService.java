@@ -1,6 +1,7 @@
 package Domain.Services;
 
-import Domain.Daos.LoginDao;
+import Contracts.Interfaces.Services.IAppointmentService;
+import Domain.Dtos.LoginDto;
 import Contracts.Interfaces.Repositories.IUserRepository;
 import Contracts.Interfaces.Services.ILoginService;
 import Contracts.Statics.UserStatics;
@@ -10,26 +11,35 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+
+import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 
 public class LoginService implements ILoginService {
-    private IUserRepository userRepository;
+    IUserRepository userRepository = new UserRepository();
+    IAppointmentService appointmentService = new AppointmentService();
     Stage stage;
     Parent root;
 
     @Override
-    public boolean login(LoginDao loginDao) throws SQLException {
+    public boolean login(LoginDto loginDto) throws SQLException, IOException {
         boolean isValidLogin;
-        userRepository = new UserRepository();
-        User user = userRepository.getUserByUsername(loginDao.getUsername());
-        if (user.getUserName().equals(loginDao.getUsername()) && user.getPassword().equals(loginDao.getPassword())){
+        User user = userRepository.getUserByUsername(loginDto.getUsername());
+        if (user.getUserName().equals(loginDto.getUsername()) && user.getPassword().equals(loginDto.getPassword())){
             isValidLogin = true;
             setCurrentUserId(user.getUserId());
             setCurrentUserName(user.getUserName());
-
+            FileWriter writer = new FileWriter("LoginHistory.txt", true);
+            writer.append("User: " + user.getUserName() + " logged in at " + LocalDateTime.now() + System.lineSeparator());
+            writer.close();
+            if (appointmentService.checkForUpcomingAppointments()){
+                new Alert(Alert.AlertType.INFORMATION, "You have an appointment starting in the next 15 minutes!").show();
+            }
         }
         else {
             isValidLogin = false;

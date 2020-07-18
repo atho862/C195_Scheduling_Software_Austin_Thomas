@@ -1,5 +1,6 @@
 package Infrastructure.Models;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Customer {
@@ -7,13 +8,13 @@ public class Customer {
     private String customerName;
     private int addressId;
     private boolean active;
-    private Date createDate;
+    private LocalDateTime createDate;
     private String createdBy;
-    private Date lastUpdate;
+    private LocalDateTime lastUpdate;
     private String lastUpdateBy;
 
-    public Customer(int customerId, String customerName, int addressId, boolean isActive, Date createDate, String createdBy,
-                    Date lastUpdate, String lastUpdateBy){
+    public Customer(int customerId, String customerName, int addressId, boolean isActive, LocalDateTime createDate, String createdBy,
+                    LocalDateTime lastUpdate, String lastUpdateBy){
         this.customerId = customerId;
         this.customerName = customerName;
         this.addressId = addressId;
@@ -28,9 +29,9 @@ public class Customer {
     public String getCustomerName() { return this.customerName; }
     public int getAddressId() { return this.addressId; }
     public boolean isActive() { return this.active; }
-    public Date getCreateDate() { return this.createDate; }
+    public LocalDateTime getCreateDate() { return this.createDate; }
     public String getCreatedBy() { return this.createdBy; }
-    public Date getLastUpdate() { return this.lastUpdate; }
+    public LocalDateTime getLastUpdate() { return this.lastUpdate; }
     public String getLastUpdateBy() { return this.lastUpdateBy; }
 
     public void setCustomerId(int customerId){
@@ -49,7 +50,7 @@ public class Customer {
         this.active = isActive;
     }
 
-    public void setCreateDate(Date createDate){
+    public void setCreateDate(LocalDateTime createDate){
         this.createDate = createDate;
     }
 
@@ -57,7 +58,7 @@ public class Customer {
         this.createdBy = createdBy;
     }
 
-    public void setLastUpdate(Date lastUpdate){
+    public void setLastUpdate(LocalDateTime lastUpdate){
         this.lastUpdate = lastUpdate;
     }
 

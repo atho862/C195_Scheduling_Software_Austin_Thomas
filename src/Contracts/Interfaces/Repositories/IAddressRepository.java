@@ -2,9 +2,12 @@ package Contracts.Interfaces.Repositories;
 
 import Infrastructure.Models.Address;
 
+import java.sql.SQLException;
+
 public interface IAddressRepository {
-    void insertAddress(Address address);
-    Address getAddressById(int addressId);
-    void updateAddress(Address address);
-    void deleteAddress(int addressId);
+    int getMaxId() throws SQLException;
+    int insertAddress(Address address) throws SQLException;
+    Address getAddressById(int addressId) throws SQLException;
+    int updateAddress(Address address) throws SQLException;
+    int deleteAddress(int addressId) throws SQLException;
 }

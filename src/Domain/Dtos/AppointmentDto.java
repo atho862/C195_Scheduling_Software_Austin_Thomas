@@ -1,10 +1,8 @@
-package Domain.Daos;
+package Domain.Dtos;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 
-public class AppointmentDao {
+public class AppointmentDto {
     private int appointmentId;
     private String customerName;
     private String title;
@@ -16,7 +14,7 @@ public class AppointmentDao {
     private LocalDateTime start;
     private LocalDateTime end;
 
-    public AppointmentDao(int appointmentId, String customerName, String title, String description, String location,
+    public AppointmentDto(int appointmentId, String customerName, String title, String description, String location,
                           String contact, String type, String url, LocalDateTime start, LocalDateTime end){
         this.appointmentId = appointmentId;
         this.customerName = customerName;

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane prefHeight="800.0" prefWidth="1000.0" style="-fx-background-color: #63768D;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Reports.ReportsMainScreenController">
+   <children>
+      <HBox layoutX="14.0" layoutY="14.0" prefHeight="52.0" prefWidth="971.0">
+         <children>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="btnBack" mnemonicParsing="false" onAction="#onActionBtnBack" style="-fx-background-color: #FDFFF7;" text="Back">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox prefHeight="52.0" prefWidth="593.0" />
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="btnLogout" mnemonicParsing="false" onAction="#onActionBtnLogout" style="-fx-background-color: #FDFFF7;" text="Logout">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" layoutX="108.0" layoutY="55.0" prefHeight="69.0" prefWidth="784.0">
+         <children>
+            <HBox alignment="CENTER" prefHeight="69.0" prefWidth="339.0">
+               <children>
+                  <Label text="Reports" textFill="#fdfff7">
+                     <font>
+                        <Font name="Segoe UI Bold Italic" size="28.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+         </children>
+      </HBox>
+      <VBox layoutX="286.0" layoutY="228.0" prefHeight="344.0" prefWidth="428.0">
+         <children>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="btnApptTypes" mnemonicParsing="false" onAction="#onActionBtnApptTypes" style="-fx-background-color: #FDFFF7;" text="View Appointment Types By Month">
+                     <font>
+                        <Font name="Segoe UI" size="18.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="btnApptCustomer" mnemonicParsing="false" onAction="#onActionBtnApptCustomer" style="-fx-background-color: #FDFFF7;" text="View Appointments By Customer">
+                     <font>
+                        <Font name="Segoe UI" size="18.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="btnConsultant" mnemonicParsing="false" onAction="#onActionBtnConsultant" style="-fx-background-color: #FDFFF7;" text="View Schedule By Consultant">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

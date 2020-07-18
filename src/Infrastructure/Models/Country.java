@@ -1,16 +1,17 @@
 package Infrastructure.Models;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Country {
     private int countryId;
     private String country;
-    private Date createDate;
+    private LocalDateTime createDate;
     private String createdBy;
-    private Date lastUpdate;
+    private LocalDateTime lastUpdate;
     private String lastUpdateBy;
 
-    public Country(int countryId, String country, Date createDate, String createdBy, Date lastUpdate, String lastUpdateBy){
+    public Country(int countryId, String country, LocalDateTime createDate, String createdBy, LocalDateTime lastUpdate, String lastUpdateBy){
         this.countryId = countryId;
         this.country = country;
         this.createDate = createDate;
@@ -21,9 +22,9 @@ public class Country {
 
     public int getCountryId() { return this.countryId; }
     public String getCountry() { return this.country; }
-    public Date getCreateDate() { return this.createDate; }
+    public LocalDateTime getCreateDate() { return this.createDate; }
     public String getCreatedBy() { return this.createdBy; }
-    public Date getLastUpdate() { return this.lastUpdate; }
+    public LocalDateTime getLastUpdate() { return this.lastUpdate; }
     public String getLastUpdateBy() { return this.lastUpdateBy; }
 
     public void setCountryId(int countryId){
@@ -34,7 +35,7 @@ public class Country {
         this.country = country;
     }
 
-    public void setCreateDate(Date createDate){
+    public void setCreateDate(LocalDateTime createDate){
         this.createDate = createDate;
     }
 
@@ -42,7 +43,7 @@ public class Country {
         this.createdBy = createdBy;
     }
 
-    public void setLastUpdate(Date lastUpdate){
+    public void setLastUpdate(LocalDateTime lastUpdate){
         this.lastUpdate = lastUpdate;
     }
 

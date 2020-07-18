@@ -1,10 +1,10 @@
-package Domain.Daos;
+package Domain.Dtos;
 
-public class LoginDao {
+public class LoginDto {
     private String username;
     private String password;
 
-    public LoginDao(String username, String password){
+    public LoginDto(String username, String password){
         this.username = username;
         this.password = password;
     }

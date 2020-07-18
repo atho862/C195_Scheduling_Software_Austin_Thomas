@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="800.0" prefWidth="1000.0" style="-fx-background-color: #63768D;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Reports.AppointmentTypeByMonthReportController">
+   <children>
+      <HBox layoutX="14.0" layoutY="14.0" prefHeight="52.0" prefWidth="971.0">
+         <children>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="btnBack" mnemonicParsing="false" onAction="#onActionBtnBack" style="-fx-background-color: #FDFFF7;" text="Back">
+                     <font>
+                        <Font size="18.0" />
+                     </font></Button>
+               </children>
+            </HBox>
+            <HBox prefHeight="52.0" prefWidth="593.0" />
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="btnLogout" mnemonicParsing="false" onAction="#onActionBtnLogout" style="-fx-background-color: #FDFFF7;" text="Logout">
+                     <font>
+                        <Font size="18.0" />
+                     </font></Button>
+               </children>
+            </HBox>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" layoutX="108.0" layoutY="40.0" prefHeight="69.0" prefWidth="784.0">
+         <children>
+            <HBox alignment="CENTER" prefHeight="69.0" prefWidth="339.0">
+               <children>
+                  <Label text="Appointment Types By Month" textFill="#fdfff7">
+                     <font>
+                        <Font name="Segoe UI Bold Italic" size="24.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+         </children>
+      </HBox>
+      <VBox layoutX="108.0" layoutY="170.0" prefHeight="551.0" prefWidth="784.0">
+         <children>
+            <HBox alignment="CENTER" prefHeight="78.0" prefWidth="784.0">
+               <children>
+                  <HBox prefHeight="78.0" prefWidth="330.0">
+                     <children>
+                        <GridPane prefHeight="70.0" prefWidth="327.0">
+                           <children>
+                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                 <children>
+                                    <Label fx:id="lblMonth" text="Month" textFill="#fdfff7">
+                                       <font>
+                                          <Font name="System Bold" size="24.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
+                                 <children>
+                                    <ComboBox fx:id="cmboBoxMonth" onAction="#onActionCmboBoxMonth" prefWidth="150.0" style="-fx-background-color: #FDFFF7;" />
+                                 </children></HBox>
+                           </children>
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="114.0" minWidth="10.0" prefWidth="79.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="178.0" minWidth="10.0" prefWidth="158.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                        </GridPane>
+                     </children>
+                  </HBox>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="412.0" prefWidth="784.0">
+               <children>
+                  <TableView fx:id="tblAppointmentTypeCounts" prefHeight="472.0" prefWidth="334.0">
+                     <columns>
+                        <TableColumn fx:id="tblColumnAppointmentType" prefWidth="235.0" text="Appointment Type" />
+                        <TableColumn fx:id="tblColumnCount" minWidth="0.0" prefWidth="98.0" text="Count" />
+                     </columns>
+                  </TableView>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

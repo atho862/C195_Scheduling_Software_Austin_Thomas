@@ -12,4 +12,5 @@ public interface IAppointmentRepository {
     int updateAppointment(Appointment appointment) throws SQLException;
     int deleteAppointment(int addressId) throws SQLException;
     int getMaxId() throws SQLException;
+    ObservableList<Appointment> getAppointmentsByCustomerId(int customerId) throws SQLException;
 }

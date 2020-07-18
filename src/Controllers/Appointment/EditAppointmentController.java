@@ -3,20 +3,17 @@ package Controllers.Appointment;
 import Contracts.Interfaces.Services.IAppointmentService;
 import Contracts.Interfaces.Services.ICustomerService;
 import Contracts.Interfaces.Services.ILoginService;
-import Contracts.Statics.AppointmentStatics;
-import Domain.Daos.AppointmentDao;
+import Domain.Dtos.AppointmentDto;
 import Domain.Helpers.AppointmentHelper;
+import Domain.Services.NavigationService;
 import Domain.Services.AppointmentService;
 import Domain.Services.CustomerService;
 import Domain.Services.LoginService;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import java.io.IOException;
@@ -27,8 +24,6 @@ import java.util.ResourceBundle;
 
 public class EditAppointmentController implements Initializable {
 
-    Stage stage;
-    Parent root;
     ObservableList<String> customerNames;
     ObservableList<String> types;
     ObservableList<String> hours;
@@ -36,6 +31,7 @@ public class EditAppointmentController implements Initializable {
     ICustomerService customerService = new CustomerService();
     ILoginService loginService = new LoginService();
     IAppointmentService appointmentService = new AppointmentService();
+    NavigationService navigationService = new NavigationService();
     int appointmentId;
 
     @FXML
@@ -124,24 +120,20 @@ public class EditAppointmentController implements Initializable {
 
     @FXML
     void onActionBtnBack(ActionEvent event) throws IOException {
-        stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource("/Views/Appointment/AppointmentList.fxml"));
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        navigationService.navigateToAppointmentListScreen(event);
     }
 
     @FXML
     void onActionBtnSave(ActionEvent event) throws SQLException, IOException {
-        int appointmentStartHour = Integer.valueOf(drpdwnStartHours.getValue());
-        int appointmentEndHour = Integer.valueOf(drpdwnEndHours.getValue());
+        LocalDateTime start = AppointmentHelper.getLocalDateTimeForAppointment(dateStart.getValue(), drpdwnStartHours.getValue(), drpdwnEndHours.getValue());
+        LocalDateTime end = AppointmentHelper.getLocalDateTimeForAppointment(dateEnd.getValue(), drpdwnEndHours.getValue(), drpdwnEndMinutes.getValue());
 
-        if (!AppointmentHelper.isDuringBusinessHours(appointmentStartHour)) {
+        if (!AppointmentHelper.isDuringBusinessHours(start.getHour())) {
             new Alert(Alert.AlertType.ERROR, "Your appointment is currently scheduled to start outside of business hours. Please select a time between 9am and 5pm").show();
             return;
         }
 
-        if (!AppointmentHelper.isDuringBusinessHours(appointmentEndHour)) {
+        if (!AppointmentHelper.isDuringBusinessHours(end.getHour())) {
             new Alert(Alert.AlertType.ERROR, "Your appointment is currently scheduled to end outside of business hours. Please select a time between 9am and 5pm.").show();
             return;
         }
@@ -153,23 +145,18 @@ public class EditAppointmentController implements Initializable {
         String contact = txtContact.getText();
         String location = txtLocation.getText();
         String url = txtUrl.getText();
-        LocalDateTime start = AppointmentHelper.getLocalDateTimeForAppointment(dateStart.getValue(), drpdwnStartHours.getValue(), drpdwnEndHours.getValue());
-        LocalDateTime end = AppointmentHelper.getLocalDateTimeForAppointment(dateEnd.getValue(), drpdwnEndHours.getValue(), drpdwnEndMinutes.getValue());
 
-        AppointmentDao appointmentDao = new AppointmentDao(appointmentId, customerName, title, description, location,
+
+        AppointmentDto appointmentDto = new AppointmentDto(appointmentId, customerName, title, description, location,
                 contact, type, url, start, end);
 
-        int updatedAppointments = appointmentService.updateAppointment(appointmentDao);
+        int updatedAppointments = appointmentService.updateAppointment(appointmentDto);
         if (updatedAppointments != 1) {
             new Alert(Alert.AlertType.ERROR, "An error occurred while updating this appointment. Please try again.").show();
             return;
         }
 
-        stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource("/Views/Appointment/AppointmentList.fxml"));
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        navigationService.navigateToAppointmentListScreen(event);
     }
 
     @FXML
@@ -182,11 +169,7 @@ public class EditAppointmentController implements Initializable {
             return;
         }
 
-        stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource("/Views/Appointment/AppointmentList.fxml"));
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        navigationService.navigateToAppointmentListScreen(event);
     }
 
     @Override
@@ -207,38 +190,30 @@ public class EditAppointmentController implements Initializable {
         drpdwnEndMinutes.setItems(minutes);
     }
 
-    public void sendAppointment(AppointmentDao appointmentDao) throws SQLException {
-        appointmentId = appointmentDao.getAppointmentId();
-        txtTitle.setText(appointmentDao.getTitle());
-        txtDescription.setText(appointmentDao.getDescription());
-        txtContact.setText(appointmentDao.getContact());
-        txtLocation.setText(appointmentDao.getLocation());
-        txtUrl.setText(appointmentDao.getUrl());
+    public void sendAppointment(AppointmentDto appointmentDto) throws SQLException {
+        appointmentId = appointmentDto.getAppointmentId();
+        txtTitle.setText(appointmentDto.getTitle());
+        txtDescription.setText(appointmentDto.getDescription());
+        txtContact.setText(appointmentDto.getContact());
+        txtLocation.setText(appointmentDto.getLocation());
+        txtUrl.setText(appointmentDto.getUrl());
         drpdwnCustomer.setItems(customerNames);
         drpdwnType.setItems(types);
-        drpdwnType.setValue(appointmentDao.getType());
-        drpdwnCustomer.setValue(appointmentDao.getCustomerName());
-        dateEnd.setValue(appointmentDao.getEnd().toLocalDate());
-        dateStart.setValue(appointmentDao.getStart().toLocalDate());
-        drpdwnStartHours.setValue(String.valueOf(appointmentDao.getStart().getHour()));
-        if (appointmentDao.getEnd().getMinute() == 0) {
+        drpdwnType.setValue(appointmentDto.getType());
+        drpdwnCustomer.setValue(appointmentDto.getCustomerName());
+        dateEnd.setValue(appointmentDto.getEnd().toLocalDate());
+        dateStart.setValue(appointmentDto.getStart().toLocalDate());
+        drpdwnStartHours.setValue(String.valueOf(appointmentDto.getStart().getHour()));
+        if (appointmentDto.getEnd().getMinute() == 0) {
             drpdwnStartMinutes.setValue("00");
         } else {
-            drpdwnStartMinutes.setValue(String.valueOf(appointmentDao.getStart().getMinute()));
+            drpdwnStartMinutes.setValue(String.valueOf(appointmentDto.getStart().getMinute()));
         }
-        drpdwnEndHours.setValue(String.valueOf(appointmentDao.getEnd().getHour()));
-        if (appointmentDao.getEnd().getMinute() == 0) {
+        drpdwnEndHours.setValue(String.valueOf(appointmentDto.getEnd().getHour()));
+        if (appointmentDto.getEnd().getMinute() == 0) {
             drpdwnEndMinutes.setValue("00");
         } else {
-            drpdwnEndMinutes.setValue(String.valueOf(appointmentDao.getEnd().getMinute()));
-        }
-    }
-
-    private Boolean isDuringBusinessHours(int hour) {
-        if (hour < 9 || hour > 17) {
-            return false;
-        } else {
-            return true;
+            drpdwnEndMinutes.setValue(String.valueOf(appointmentDto.getEnd().getMinute()));
         }
     }
 }
