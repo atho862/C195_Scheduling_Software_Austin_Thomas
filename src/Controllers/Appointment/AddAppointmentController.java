@@ -127,11 +127,11 @@ public class AddAppointmentController implements Initializable {
         LocalDateTime start = AppointmentHelper.getLocalDateTimeForAppointment(dateStart.getValue(), drpdwnStartHours.getValue(), drpdwnStartMinutes.getValue());
         LocalDateTime end = AppointmentHelper.getLocalDateTimeForAppointment(dateEnd.getValue(), drpdwnEndHours.getValue(), drpdwnEndMinutes.getValue());
 
-        if (!AppointmentHelper.isDuringBusinessHours(start.getHour())){
+        if (!AppointmentHelper.isDuringBusinessHours(start)){
             new Alert(Alert.AlertType.ERROR, "Your appointment is currently scheduled to start outside of business hours. Please schedule a time between 9am and 5pm.").show();
             return;
         }
-        if (!AppointmentHelper.isDuringBusinessHours(end.getHour())){
+        if (!AppointmentHelper.isDuringBusinessHours(end)){
             new Alert(Alert.AlertType.ERROR, "Your appointment is currently scheduled to end outside business hours. Please schedule a time between 9am and 5pm.").show();
             return;
         }

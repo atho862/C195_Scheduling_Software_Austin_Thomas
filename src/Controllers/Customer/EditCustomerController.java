@@ -103,6 +103,14 @@ public class EditCustomerController implements Initializable {
 
     @FXML
     void onActionBtnSave(ActionEvent event) throws SQLException, IOException {
+        try {
+            isValidCustomerInput();
+        }
+        catch (Exception e){
+            new Alert(Alert.AlertType.ERROR, e.getMessage());
+            return;
+        }
+
         String customerName = txtCustomerName.getText();
         String address = txtAddress.getText();
         String address2 = txtAddress2.getText();
@@ -163,6 +171,21 @@ public class EditCustomerController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         choiceBoxActive.setItems(CustomerHelper.getIsActiveItems());
+    }
+
+    private void isValidCustomerInput()throws Exception{
+        if (txtCustomerName.getText().equals("")){
+            throw new Exception("Please enter a Customer Name");
+        }
+        if (txtAddress.getText().equals("")){
+            throw new Exception("Please enter an Address");
+        }
+        if (txtCity.getText().equals("")){
+            throw new Exception("Please enter a city");
+        }
+        if (txtCountry.getText().equals("")){
+            throw new Exception("Please enter a country");
+        }
     }
 
 }

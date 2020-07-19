@@ -20,13 +20,16 @@ public class AppointmentHelper {
         return date;
     }
 
-    public static boolean isDuringBusinessHours(int hour){
-        if (hour < 9 || hour > 17) {
-                return false;
+    public static boolean isDuringBusinessHours(LocalDateTime dateTime){
+        boolean isDuringBusinessHours = true;
+        if (dateTime.getHour() < 9 || dateTime.getHour() > 17) {
+                isDuringBusinessHours = false;
         }
-        else {
-                return true;
+        if (dateTime.getDayOfWeek() == DayOfWeek.SATURDAY || dateTime.getDayOfWeek() == DayOfWeek.SUNDAY){
+            isDuringBusinessHours = false;
         }
+
+        return isDuringBusinessHours;
     }
 
     public static ObservableList<String> setTypes(){
@@ -92,10 +95,10 @@ public class AppointmentHelper {
         boolean isOverlapping = false;
         for (AppointmentDto appointment : appointments
              ) {
-            if (appointment.getEnd().isBefore(start)){
+            if (start.isAfter(appointment.getStart()) && start.isBefore(appointment.getEnd())){
                 isOverlapping = true;
             }
-            if (appointment.getStart().isAfter(end)){
+            if (end.isAfter(appointment.getStart()) && end.isBefore(appointment.getEnd())){
                 isOverlapping = true;
             }
         }

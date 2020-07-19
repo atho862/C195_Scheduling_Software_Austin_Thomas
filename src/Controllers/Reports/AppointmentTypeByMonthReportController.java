@@ -43,10 +43,10 @@ public class AppointmentTypeByMonthReportController implements Initializable {
     private ComboBox<Month> cmboBoxMonth;
 
     @FXML
-    private TableColumn<String, AppointmentTypeCountDto> tblColumnAppointmentType;
+    private TableColumn<AppointmentTypeCountDto, String> tblColumnAppointmentType;
 
     @FXML
-    private TableColumn<Integer, AppointmentTypeCountDto> tblColumnCount;
+    private TableColumn<AppointmentTypeCountDto, Integer> tblColumnCount;
 
     @FXML
     void onActionBtnBack(ActionEvent event) throws IOException {
@@ -78,7 +78,7 @@ public class AppointmentTypeByMonthReportController implements Initializable {
 
     private void initializeAppointmentTypeCountTable(){
         //Add lambdas to quickly initialize table property values
-        tblColumnAppointmentType.setCellValueFactory(cellData -> (ObservableValue<AppointmentTypeCountDto>) new PropertyValueFactory<>("type"));
-        tblColumnCount.setCellValueFactory(cellData -> (ObservableValue<AppointmentTypeCountDto>) new PropertyValueFactory<>("count"));
+        tblColumnAppointmentType.setCellValueFactory(cellData -> cellData.getValue().getTypeProperty());
+        tblColumnCount.setCellValueFactory(cellData -> cellData.getValue().getCountProperty().asObject());
     }
 }

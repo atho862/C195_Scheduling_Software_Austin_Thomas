@@ -118,9 +118,13 @@ public class AddressRepository implements IAddressRepository {
                 "DELETE FROM address WHERE addressId = ?");
 
         statement.setInt(1, addressId);
-
-        int deletedAddresses = statement.executeUpdate();
-
-        return deletedAddresses;
+        try {
+            int deletedAddresses = statement.executeUpdate();
+            return deletedAddresses;
+        }
+        catch (SQLException e){
+            System.out.println(e);
+            return 0;
+        }
     }
 }

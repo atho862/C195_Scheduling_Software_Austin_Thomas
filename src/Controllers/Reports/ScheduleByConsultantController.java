@@ -90,10 +90,10 @@ public class ScheduleByConsultantController implements Initializable {
 
     private void initializeAppointmentsTable(){
         //Lambdas to speed up binding of table columns
-        tblColumnCustomer.setCellValueFactory(cellData -> (ObservableValue<AppointmentDto>) new PropertyValueFactory<>("customerName"));
-        tblColumnTitle.setCellValueFactory(cellData -> (ObservableValue<AppointmentDto>) new PropertyValueFactory<>("title"));
-        tblColumnType.setCellValueFactory(cellData -> (ObservableValue<AppointmentDto>) new PropertyValueFactory<>("type"));
-        tblColumnStart.setCellValueFactory(cellData -> (ObservableValue<AppointmentDto>) new PropertyValueFactory<>("start"));
-        tblColumnEnd.setCellValueFactory(cellData -> (ObservableValue<AppointmentDto>) new PropertyValueFactory<>("end"));
+        tblColumnCustomer.setCellValueFactory(new PropertyValueFactory<>("customerName"));
+        tblColumnTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
+        tblColumnType.setCellValueFactory(new PropertyValueFactory<>("type"));
+        tblColumnStart.setCellValueFactory(new PropertyValueFactory<>("start"));
+        tblColumnEnd.setCellValueFactory(new PropertyValueFactory<>("end"));
     }
 }

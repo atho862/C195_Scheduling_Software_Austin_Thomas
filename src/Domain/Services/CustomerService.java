@@ -143,7 +143,6 @@ public class CustomerService implements ICustomerService {
 
         Customer customer = customerRepository.getCustomerById(customerId);
         int deletedCustomer = customerRepository.deleteCustomer(customerId);
-        int deletedAddresses = addressRepository.deleteAddress(customer.getAddressId());
 
         return deletedCustomer;
     }

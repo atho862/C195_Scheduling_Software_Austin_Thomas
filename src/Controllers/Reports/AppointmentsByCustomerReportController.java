@@ -1,26 +1,22 @@
 package Controllers.Reports;
 
 import Contracts.Interfaces.Repositories.ICustomerRepository;
-import Contracts.Interfaces.Repositories.IUserRepository;
 import Contracts.Interfaces.Services.IAppointmentService;
 import Contracts.Interfaces.Services.ILoginService;
 import Contracts.Interfaces.Services.INavigationService;
 import Domain.Dtos.AppointmentDto;
-import Domain.Dtos.AppointmentTypeCountDto;
 import Domain.Services.AppointmentService;
 import Domain.Services.LoginService;
 import Domain.Services.NavigationService;
+import Infrastructure.Models.Appointment;
 import Infrastructure.Models.Customer;
 import Infrastructure.Repositories.CustomerRepository;
-import Infrastructure.Repositories.UserRepository;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -36,7 +32,7 @@ public class AppointmentsByCustomerReportController implements Initializable {
 
 
     @FXML
-    private TableColumn<String, AppointmentDto> tblColumnType;
+    private TableColumn<AppointmentDto, String> tblColumnType;
 
     @FXML
     private Button btnBack;
@@ -48,10 +44,10 @@ public class AppointmentsByCustomerReportController implements Initializable {
     private ComboBox<String> choiceBoxCustomer;
 
     @FXML
-    private TableColumn<String, AppointmentDto> tblColumnTitle;
+    private TableColumn<AppointmentDto, String> tblColumnTitle;
 
     @FXML
-    private TableColumn<LocalDateTime, AppointmentDto> tblColumnStart;
+    private TableColumn<AppointmentDto, LocalDateTime> tblColumnStart;
 
     @FXML
     private Label lblCustomer;
@@ -60,10 +56,10 @@ public class AppointmentsByCustomerReportController implements Initializable {
     private TableView<AppointmentDto> tblAppointments;
 
     @FXML
-    private TableColumn<LocalDateTime, AppointmentDto> tblColumnEnd;
+    private TableColumn<AppointmentDto, LocalDateTime> tblColumnEnd;
 
     @FXML
-    void onActionBtnBack(ActionEvent event) throws IOException {
+    void onActionBtnBack(ActionEvent event) throws IOException  {
         navigationService.navigateToReportsScreen(event);
     }
 
@@ -94,9 +90,9 @@ public class AppointmentsByCustomerReportController implements Initializable {
 
     private void initializeAppointmentsTable(){
         //Lambdas to quickly initialize the value bindings of the table
-        tblColumnTitle.setCellValueFactory(cellData -> (ObservableValue<AppointmentDto>) new PropertyValueFactory<>("title"));
-        tblColumnType.setCellValueFactory(cellData -> (ObservableValue<AppointmentDto>) new PropertyValueFactory<>("type"));
-        tblColumnStart.setCellValueFactory(cellData -> (ObservableValue<AppointmentDto>) new PropertyValueFactory<>("start"));
-        tblColumnEnd.setCellValueFactory(cellData -> (ObservableValue<AppointmentDto>) new PropertyValueFactory<>("end"));
+        tblColumnTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
+        tblColumnType.setCellValueFactory(new PropertyValueFactory<>("type"));
+        tblColumnStart.setCellValueFactory(new PropertyValueFactory<>("start"));
+        tblColumnEnd.setCellValueFactory(new PropertyValueFactory<>("end"));
     }
 }
