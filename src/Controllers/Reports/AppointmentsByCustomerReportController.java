@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 public class AppointmentsByCustomerReportController implements Initializable {
@@ -29,7 +30,7 @@ public class AppointmentsByCustomerReportController implements Initializable {
     INavigationService navigationService = new NavigationService();
     IAppointmentService appointmentService = new AppointmentService();
     ICustomerRepository customerRepository = new CustomerRepository();
-
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm");
 
     @FXML
     private TableColumn<AppointmentDto, String> tblColumnType;
@@ -90,9 +91,31 @@ public class AppointmentsByCustomerReportController implements Initializable {
 
     private void initializeAppointmentsTable(){
         //Lambdas to quickly initialize the value bindings of the table
-        tblColumnTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
-        tblColumnType.setCellValueFactory(new PropertyValueFactory<>("type"));
+        tblColumnTitle.setCellValueFactory(cellData -> cellData.getValue().getTitleProperty());
+        tblColumnType.setCellValueFactory(cellData -> cellData.getValue().getTypeProperty());
         tblColumnStart.setCellValueFactory(new PropertyValueFactory<>("start"));
         tblColumnEnd.setCellValueFactory(new PropertyValueFactory<>("end"));
+        tblColumnStart.setCellFactory(tc -> new TableCell<AppointmentDto, LocalDateTime>(){
+            @Override
+            protected void updateItem(LocalDateTime item, boolean empty) {
+                if (item == null){
+                    setText(null);
+                }
+                else {
+                    setText(item.format(formatter));
+                }
+            }
+        });
+        tblColumnEnd.setCellFactory(tc -> new TableCell<AppointmentDto, LocalDateTime>(){
+            @Override
+            protected void updateItem(LocalDateTime item, boolean empty) {
+                if (item == null){
+                    setText(null);
+                }
+                else {
+                    setText(item.format(formatter));
+                }
+            }
+        });
     }
 }

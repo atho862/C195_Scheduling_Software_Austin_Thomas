@@ -14,12 +14,14 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 public class ScheduleByConsultantController implements Initializable {
@@ -27,9 +29,10 @@ public class ScheduleByConsultantController implements Initializable {
     INavigationService navigationService = new NavigationService();
     ILoginService loginService = new LoginService();
     IUserRepository userRepository = new UserRepository();
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm");
 
     @FXML
-    private TableColumn<String, AppointmentDto> tblColumnType;
+    private TableColumn<AppointmentDto, String> tblColumnType;
 
     @FXML
     private Button btnBack;
@@ -44,19 +47,19 @@ public class ScheduleByConsultantController implements Initializable {
     private Label lblConsultant;
 
     @FXML
-    private TableColumn<String, AppointmentDto> tblColumnTitle;
+    private TableColumn<AppointmentDto, String> tblColumnTitle;
 
     @FXML
-    private TableColumn<LocalDateTime, AppointmentDto> tblColumnStart;
+    private TableColumn<AppointmentDto, LocalDateTime> tblColumnStart;
 
     @FXML
     private TableView<AppointmentDto> tblAppointments;
 
     @FXML
-    private TableColumn<LocalDateTime, AppointmentDto> tblColumnEnd;
+    private TableColumn<AppointmentDto, LocalDateTime> tblColumnEnd;
 
     @FXML
-    private TableColumn<String, AppointmentDto> tblColumnCustomer;
+    private TableColumn<AppointmentDto, String> tblColumnCustomer;
 
     @FXML
     void onActionBtnBack(ActionEvent event) throws IOException {
@@ -90,10 +93,32 @@ public class ScheduleByConsultantController implements Initializable {
 
     private void initializeAppointmentsTable(){
         //Lambdas to speed up binding of table columns
-        tblColumnCustomer.setCellValueFactory(new PropertyValueFactory<>("customerName"));
-        tblColumnTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
-        tblColumnType.setCellValueFactory(new PropertyValueFactory<>("type"));
+        tblColumnCustomer.setCellValueFactory(cellData -> cellData.getValue().getCustomerNameProperty());
+        tblColumnTitle.setCellValueFactory(cellData -> cellData.getValue().getTitleProperty());
+        tblColumnType.setCellValueFactory(cellData -> cellData.getValue().getTypeProperty());
         tblColumnStart.setCellValueFactory(new PropertyValueFactory<>("start"));
         tblColumnEnd.setCellValueFactory(new PropertyValueFactory<>("end"));
+        tblColumnStart.setCellFactory(tc -> new TableCell<AppointmentDto, LocalDateTime>(){
+            @Override
+            protected void updateItem(LocalDateTime item, boolean empty) {
+                if (item == null){
+                    setText(null);
+                }
+                else {
+                    setText(item.format(formatter));
+                }
+            }
+        });
+        tblColumnEnd.setCellFactory(tc -> new TableCell<AppointmentDto, LocalDateTime>(){
+            @Override
+            protected void updateItem(LocalDateTime item, boolean empty) {
+                if (item == null){
+                    setText(null);
+                }
+                else {
+                    setText(item.format(formatter));
+                }
+            }
+        });
     }
 }

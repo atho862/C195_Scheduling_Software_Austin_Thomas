@@ -27,6 +27,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 public class AppointmentListController implements Initializable {
@@ -36,6 +37,7 @@ public class AppointmentListController implements Initializable {
     NavigationService navigationService = new NavigationService();
     Stage stage;
     Parent root;
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm");
 
     @FXML
     private TableColumn<AppointmentDto, String> tblColumnType;
@@ -50,7 +52,7 @@ public class AppointmentListController implements Initializable {
     private Button btnLogout;
 
     @FXML
-    private TableColumn<AppointmentDto, String> tblColumnLocation;
+    private TableColumn<AppointmentDto, String> tblColumnContact;
 
     @FXML
     private ToggleGroup tglGroupAppointmentFilter;
@@ -210,13 +212,38 @@ public class AppointmentListController implements Initializable {
 
     private void initializeAppointmentsTable() throws SQLException {
         tblViewAppointments.setItems(appointmentService.getAppointmentsForUser(UserStatics.getCurrentUserId()));
-        tblColumnId.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
-        tblColumnTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
-        tblColumnCustomer.setCellValueFactory(new PropertyValueFactory<>("customerName"));
-        tblColumnType.setCellValueFactory(new PropertyValueFactory<>("type"));
+        //Use lambdas for properties on the table view
+        tblColumnTitle.setCellValueFactory(cellData -> cellData.getValue().getTitleProperty());
+        tblColumnCustomer.setCellValueFactory(cellData -> cellData.getValue().getCustomerNameProperty());
+        tblColumnType.setCellValueFactory(cellData -> cellData.getValue().getTypeProperty());
+        tblColumnContact.setCellValueFactory(cellData -> cellData.getValue().getContactProperty());
         tblColumnStart.setCellValueFactory(new PropertyValueFactory<>("start"));
         tblColumnEnd.setCellValueFactory(new PropertyValueFactory<>("end"));
+        tblColumnId.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
         btnRadioViewAllAppointments.setSelected(true);
         datePicker.setValue(LocalDate.now());
+
+        tblColumnStart.setCellFactory(tc -> new TableCell<AppointmentDto, LocalDateTime>(){
+            @Override
+            protected void updateItem(LocalDateTime item, boolean empty) {
+                if (item == null){
+                    setText(null);
+                }
+                else {
+                    setText(item.format(formatter));
+                }
+            }
+        });
+        tblColumnEnd.setCellFactory(tc -> new TableCell<AppointmentDto, LocalDateTime>(){
+            @Override
+            protected void updateItem(LocalDateTime item, boolean empty) {
+                if (item == null){
+                    setText(null);
+                }
+                else {
+                    setText(item.format(formatter));
+                }
+            }
+        });
     }
 }

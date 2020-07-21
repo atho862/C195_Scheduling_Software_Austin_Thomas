@@ -163,5 +163,11 @@ public class AddCustomerController implements Initializable {
         if (txtCountry.getText().equals("")){
             throw new Exception("Please enter a country");
         }
+        if (txtPostalCode.getText().equals("")){
+            throw new Exception("Please enter a zip code");
+        }
+        if (txtPhone.getText().equals("")){
+            throw new Exception("Please enter a phone number");
+        }
     }
 }

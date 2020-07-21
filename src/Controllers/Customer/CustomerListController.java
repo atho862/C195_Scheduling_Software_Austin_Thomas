@@ -3,18 +3,17 @@ package Controllers.Customer;
 import Contracts.Interfaces.Services.ICustomerService;
 import Contracts.Interfaces.Services.ILoginService;
 import Contracts.Interfaces.Services.INavigationService;
+import Domain.Dtos.AppointmentDto;
 import Domain.Dtos.CustomerDto;
 import Domain.Services.CustomerService;
 import Domain.Services.LoginService;
 import Domain.Services.NavigationService;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import java.io.IOException;
 import java.net.URL;
@@ -107,5 +106,19 @@ public class CustomerListController implements Initializable {
         tblColumnCustomerName.setCellValueFactory(new PropertyValueFactory<>("customerName"));
         tblColumnId.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         tblColumnActive.setCellValueFactory(new PropertyValueFactory<>("active"));
+        tblColumnActive.setCellFactory(tc -> new TableCell<CustomerDto, Boolean>(){
+            @Override
+            protected void updateItem(Boolean item, boolean empty) {
+                if (item == null){
+                    setText(null);
+                }
+                else if (item.booleanValue() == true){
+                    setText("Yes");
+                }
+                else {
+                    setText("No");
+                }
+            }
+        });
     }
 }

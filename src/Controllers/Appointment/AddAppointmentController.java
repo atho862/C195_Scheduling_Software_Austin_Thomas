@@ -25,8 +25,6 @@ import java.util.ResourceBundle;
 
 public class AddAppointmentController implements Initializable {
 
-    Stage stage;
-    Parent root;
     NavigationService navigationService = new NavigationService();
     ICustomerService customerService = new CustomerService();
     ILoginService loginService = new LoginService();
@@ -124,15 +122,22 @@ public class AddAppointmentController implements Initializable {
 
     @FXML
     void onActionBtnSave(ActionEvent event) throws SQLException, IOException {
+        try {
+            isValidAppointmentInput();
+        }
+        catch (Exception e){
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+            return;
+        }
         LocalDateTime start = AppointmentHelper.getLocalDateTimeForAppointment(dateStart.getValue(), drpdwnStartHours.getValue(), drpdwnStartMinutes.getValue());
         LocalDateTime end = AppointmentHelper.getLocalDateTimeForAppointment(dateEnd.getValue(), drpdwnEndHours.getValue(), drpdwnEndMinutes.getValue());
 
         if (!AppointmentHelper.isDuringBusinessHours(start)){
-            new Alert(Alert.AlertType.ERROR, "Your appointment is currently scheduled to start outside of business hours. Please schedule a time between 9am and 5pm.").show();
+            new Alert(Alert.AlertType.ERROR, "Your appointment is currently scheduled to start outside of business hours. Please schedule a time Monday - Friday, between the hours of 9am and 5pm.").show();
             return;
         }
         if (!AppointmentHelper.isDuringBusinessHours(end)){
-            new Alert(Alert.AlertType.ERROR, "Your appointment is currently scheduled to end outside business hours. Please schedule a time between 9am and 5pm.").show();
+            new Alert(Alert.AlertType.ERROR, "Your appointment is currently scheduled to end outside business hours. Please schedule a time Monday - Friday, between the hours of 9am and 5pm.").show();
             return;
         }
         if (AppointmentHelper.checkForOverlappingAppointments(start, end, appointmentService.getAppointmentsForUser(UserStatics.getCurrentUserId()))){
@@ -187,5 +192,29 @@ public class AddAppointmentController implements Initializable {
         drpdwnEndHours.setItems(hours);
         drpdwnEndMinutes.setItems(minutes);
         drpdwnEndMinutes.setValue("00");
+    }
+
+    private void isValidAppointmentInput() throws Exception{
+        if (txtTitle.getText().equals("")){
+            throw new Exception("Please enter a title");
+        }
+        if (txtContact.getText().equals("")){
+            throw new Exception("Please enter a contact");
+        }
+        if (txtDescription.getText().equals("")){
+            throw new Exception("Please enter a description");
+        }
+        if (txtLocation.getText().equals("")){
+            throw new Exception("Please enter a location");
+        }
+        if (txtUrl.getText().equals("")){
+            throw new Exception("Please enter a URL. If there isn't one for the meeting, please enter N/A");
+        }
+        if (dateStart.getValue() == null){
+            throw new Exception("Please enter a start date for the appointment");
+        }
+        if (dateEnd.getValue() == null){
+            throw new Exception("Please enter an end date for the appointment");
+        }
     }
 }
