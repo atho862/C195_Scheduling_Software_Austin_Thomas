@@ -1,43 +1,43 @@
 package Infrastructure.Models;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
-public class User {
+public class User extends BaseModel{
     private int userId;
     private String userName;
     private String password;
     private boolean active;
-    private Date createDate;
-    private String createdBy;
-    private Date lastUpdate;
-    private String lastUpdateBy;
+    private int roleId;
+    private String name;
 
-    public User(String userName, String password, int userId){
-        this.userName = userName;
-        this.password = password;
-        this.userId = userId;
-    }
-
-    public User(int userId, String userName, String password, boolean isActive, Date createDate, String createdBy,
-                Date lastUpdate, String lastUpdateBy){
+    public User(int userId, String userName, String password, boolean isActive, int roleId, String name, LocalDateTime createDate, String createdBy,
+                LocalDateTime lastUpdate, String lastUpdateBy){
+        super(createDate, createdBy, lastUpdate, lastUpdateBy);
         this.userId = userId;
         this.userName = userName;
         this.password = password;
         this.active = isActive;
-        this.createDate = createDate;
-        this.createdBy = createdBy;
-        this.lastUpdate = lastUpdate;
-        this.lastUpdateBy = lastUpdateBy;
+        this.roleId = roleId;
+        this.name = name;
+    }
+
+    public User(int userId, String userName, String password, boolean isActive, int roleId, String name){
+        this.userId = userId;
+        this.userName = userName;
+        this.password = password;
+        this.active = isActive;
+        this.roleId = roleId;
+        this.name = name;
     }
 
     public int getUserId() { return this.userId; }
     public String getUserName() { return this.userName; }
     public String getPassword() { return this.password; }
     public boolean isActive() { return this.active; }
-    public Date getCreateDate() { return this.createDate; }
-    public String getCreatedBy() { return this.createdBy; }
-    public Date getLastUpdate() { return this.lastUpdate; }
-    public String getLastUpdateBy() { return this.lastUpdateBy; }
+    public int getRoleId(){ return this.roleId; }
+    public String getName() { return this.name; }
 
     public void setUserId(int userId){
         this.userId = userId;
@@ -55,19 +55,11 @@ public class User {
         this.active = isActive;
     }
 
-    public void setCreateDate(Date createDate){
-        this.createDate = createDate;
+    public void setRoleId(int roleId) {
+        this.roleId = roleId;
+    }
+    public void setName(String name){
+        this.name = name;
     }
 
-    public void setCreatedBy(String createdBy){
-        this.createdBy = createdBy;
-    }
-
-    public void setLastUpdate(Date lastUpdate){
-        this.lastUpdate = lastUpdate;
-    }
-
-    public void setLastUpdateBy(String lastUpdateBy){
-        this.lastUpdateBy = lastUpdateBy;
-    }
 }

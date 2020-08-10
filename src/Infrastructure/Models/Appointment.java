@@ -3,7 +3,7 @@ package Infrastructure.Models;
 import java.time.LocalDateTime;
 import java.util.Date;
 
-public class Appointment {
+public class Appointment extends BaseModel{
     private int appointmentId;
     private int customerId;
     private int userId;
@@ -15,14 +15,11 @@ public class Appointment {
     private String url;
     private LocalDateTime start;
     private LocalDateTime end;
-    private LocalDateTime createDate;
-    private String createdBy;
-    private LocalDateTime lastUpdate;
-    private String lastUpdatedBy;
 
     public Appointment(int appointmentId, int customerId, int userId, String title, String description, String location,
                        String contact, String type, String url, LocalDateTime start, LocalDateTime end, LocalDateTime createDate, String createdBy,
                        LocalDateTime lastUpdate, String lastUpdatedBy) {
+        super(createDate, createdBy, lastUpdate, lastUpdatedBy);
         this.appointmentId = appointmentId;
         this.customerId = customerId;
         this.userId = userId;
@@ -34,10 +31,6 @@ public class Appointment {
         this.url = url;
         this.start = start;
         this.end = end;
-        this.createDate = createDate;
-        this.createdBy = createdBy;
-        this.lastUpdate = lastUpdate;
-        this.lastUpdatedBy = lastUpdatedBy;
     }
 
     public int getAppointmentId() { return this.appointmentId; }
@@ -51,10 +44,6 @@ public class Appointment {
     public String getUrl() { return this.url; }
     public LocalDateTime getStart() { return this.start; }
     public LocalDateTime getEnd() { return this.end; }
-    public LocalDateTime getCreateDate() { return this.createDate; }
-    public String getCreatedBy() { return this.createdBy; }
-    public LocalDateTime getLastUpdate() { return this.lastUpdate; }
-    public String getLastUpdatedBy() { return this.lastUpdatedBy; }
 
     public void setAppointmentId(int appointmentId){
         this.appointmentId = appointmentId;
@@ -98,21 +87,5 @@ public class Appointment {
 
     public void setEnd(LocalDateTime end){
         this.end = end;
-    }
-
-    public void setCreateDate(LocalDateTime createDate){
-        this.createDate = createDate;
-    }
-
-    public void setCreatedBy(String createdBy){
-        this.createdBy = createdBy;
-    }
-
-    public void setLastUpdate(LocalDateTime lastUpdate){
-        this.lastUpdate = lastUpdate;
-    }
-
-    public void setLastUpdatedBy(String lastUpdatedBy){
-        this.lastUpdatedBy = lastUpdatedBy;
     }
 }

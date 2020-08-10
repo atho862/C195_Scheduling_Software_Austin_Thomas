@@ -115,4 +115,30 @@ public class NavigationService implements INavigationService {
         stage.show();
     }
 
+    @Override
+    public void navigateToUserListScreen(ActionEvent event) throws IOException {
+        stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
+        root = FXMLLoader.load(getClass().getResource("/Views/User/UserList.fxml"));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @Override
+    public void navigateToAddEditUserScreen(ActionEvent event, FXMLLoader loader) throws IOException{
+        if (loader == null){
+            stage  = (Stage) ((Button)event.getSource()).getScene().getWindow();
+            root = FXMLLoader.load(getClass().getResource("/Views/User/AddEditUser.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }
+        else {
+            stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
+            root = loader.getRoot();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }
+    }
 }

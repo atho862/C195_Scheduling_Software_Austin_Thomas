@@ -3,9 +3,11 @@ package Controllers.Reports;
 import Contracts.Interfaces.Repositories.IAppointmentTypeCountRepository;
 import Contracts.Interfaces.Services.ILoginService;
 import Contracts.Interfaces.Services.INavigationService;
+import Contracts.Interfaces.Services.IReportsService;
 import Domain.Dtos.AppointmentTypeCountDto;
 import Domain.Services.LoginService;
 import Domain.Services.NavigationService;
+import Domain.Services.ReportsService;
 import Infrastructure.Repositories.AppointmentTypeCountRepository;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -26,6 +28,7 @@ public class AppointmentTypeByMonthReportController implements Initializable {
     IAppointmentTypeCountRepository appointmentTypeCountRepository = new AppointmentTypeCountRepository();
     INavigationService navigationService = new NavigationService();
     ILoginService loginService = new LoginService();
+    IReportsService reportsService = new ReportsService();
 
     @FXML
     private Button btnBack;
@@ -35,6 +38,9 @@ public class AppointmentTypeByMonthReportController implements Initializable {
 
     @FXML
     private Label lblMonth;
+
+    @FXML
+    private Button btnExportToExcel;
 
     @FXML
     private TableView<AppointmentTypeCountDto> tblAppointmentTypeCounts;
@@ -59,11 +65,21 @@ public class AppointmentTypeByMonthReportController implements Initializable {
     }
 
     @FXML
+    void onActionBtnExportToExcel(ActionEvent event){
+        if (tblAppointmentTypeCounts.getItems().size() < 1){
+            new Alert(Alert.AlertType.ERROR, "Unable to export a report for a month with no appointments. Please select a month with an appointment").show();
+            return;
+        }
+        reportsService.exportAppointmentTypeByMonthToExcel(tblAppointmentTypeCounts.getItems(), cmboBoxMonth.getValue());
+    }
+
+    @FXML
     void onActionCmboBoxMonth(ActionEvent event) throws SQLException {
         Month selectedMonth = cmboBoxMonth.getValue();
         int month = selectedMonth.getValue();
         tblAppointmentTypeCounts.setItems(appointmentTypeCountRepository.getAppointmentTypeCountsByMonth(month));
     }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initializeAppointmentTypeCountTable();

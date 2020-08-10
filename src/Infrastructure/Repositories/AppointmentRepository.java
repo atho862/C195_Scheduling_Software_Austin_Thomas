@@ -49,7 +49,7 @@ public class AppointmentRepository implements IAppointmentRepository {
             statement.setTimestamp(12, Timestamp.valueOf(appointment.getCreateDate()));
             statement.setString(13, appointment.getCreatedBy());
             statement.setTimestamp(14, Timestamp.valueOf(appointment.getLastUpdate()));
-            statement.setString(15, appointment.getLastUpdatedBy());
+            statement.setString(15, appointment.getLastUpdateBy());
 
             int affectedRows =  statement.executeUpdate();
             return affectedRows;
@@ -144,7 +144,7 @@ public class AppointmentRepository implements IAppointmentRepository {
         statement.setTimestamp(7, Timestamp.valueOf(appointment.getStart()));
         statement.setTimestamp(8, Timestamp.valueOf(appointment.getEnd()));
         statement.setTimestamp(9, Timestamp.valueOf(appointment.getLastUpdate()));
-        statement.setString(10, appointment.getLastUpdatedBy());
+        statement.setString(10, appointment.getLastUpdateBy());
         statement.setInt(11, appointment.getAppointmentId());
         try {
             int updatedAppointments = statement.executeUpdate();

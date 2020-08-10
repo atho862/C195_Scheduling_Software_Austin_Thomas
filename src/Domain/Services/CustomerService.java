@@ -31,6 +31,11 @@ public class CustomerService implements ICustomerService {
     ICountryRepository countryRepository = new CountryRepository();
     ICityRepository cityRepository = new CityRepository();
     CustomerHelper customerHelper = new CustomerHelper();
+    MapCustomerToCustomerDto customerToCustomerDtoMapper = new MapCustomerToCustomerDto();
+    MapCustomerDtoToCustomer customerDtoToCustomerMapper = new MapCustomerDtoToCustomer();
+    MapCustomerDtoToAddress customerDtoToAddressMapper = new MapCustomerDtoToAddress();
+    MapCustomerDtoToCity customerDtoToCityMapper = new MapCustomerDtoToCity();
+    MapCustomerDtoToCountry customerDtoToCountryMapper = new MapCustomerDtoToCountry();
 
     @Override
     public ObservableList<String> getCustomerNames() throws SQLException {
@@ -43,7 +48,7 @@ public class CustomerService implements ICustomerService {
         ObservableList<Customer> customers = customerRepository.getAllCustomers();
         for (Customer customer : customers
              ) {
-            CustomerDto customerDto = MapCustomerToCustomerDto.Map(customer);
+            CustomerDto customerDto = customerToCustomerDtoMapper.Map(customer);
             setCustomerAddressFields(customerDto);
             setCustomerCityFields(customerDto);
             setCustomerCountryFields(customerDto);
@@ -75,7 +80,7 @@ public class CustomerService implements ICustomerService {
         }
 
         customerDto.setAddressId(saveAddress(customerDto));
-        Customer customer = MapCustomerDtoToCustomer.Map(customerDto);
+        Customer customer = customerDtoToCustomerMapper.Map(customerDto);
         customer.setCreateDate(LocalDateTime.now());
         customer.setCreatedBy(UserStatics.getCurrentUserName());
         customer.setLastUpdate(LocalDateTime.now());
@@ -124,13 +129,13 @@ public class CustomerService implements ICustomerService {
         }
 
         if (didAddressChange){
-            Address address = MapCustomerDtoToAddress.Map(customerDto);
+            Address address = customerDtoToAddressMapper.Map(customerDto);
             address.setLastUpdateBy(UserStatics.getCurrentUserName());
             address.setLastUpdate(LocalDateTime.now());
             addressRepository.updateAddress(address);
         }
 
-        Customer customer = MapCustomerDtoToCustomer.Map(customerDto);
+        Customer customer = customerDtoToCustomerMapper.Map(customerDto);
         customer.setLastUpdateBy(UserStatics.getCurrentUserName());
         customer.setLastUpdate(LocalDateTime.now());
         int customersUpdated = customerRepository.updateCustomer(customer);
@@ -146,6 +151,22 @@ public class CustomerService implements ICustomerService {
 
         return deletedCustomer;
     }
+
+    @Override
+    public ObservableList<CustomerDto> searchCustomersByCustomerName(String searchtext) throws SQLException {
+        ObservableList<CustomerDto> customerDtos = FXCollections.observableArrayList();
+        ObservableList<Customer> customers = customerRepository.getAllCustomers();
+        for (Customer customer : customers
+             ) {
+            if (customer.getCustomerName().toLowerCase().contains(searchtext)){
+                CustomerDto customerDto = customerToCustomerDtoMapper.Map(customer);
+                customerDtos.add(customerDto);
+            }
+        }
+
+        return customerDtos;
+    }
+
     private void setCustomerAddressFields(CustomerDto customerDto){
         try {
             Address address = addressRepository.getAddressById(customerDto.getAddressId());
@@ -180,7 +201,7 @@ public class CustomerService implements ICustomerService {
     }
 
     private int saveCountry(CustomerDto customerDto) throws SQLException {
-        Country country = MapCustomerDtoToCountry.Map(customerDto);
+        Country country = customerDtoToCountryMapper.Map(customerDto);
         country.setCreateDate(LocalDateTime.now());
         country.setLastUpdate(LocalDateTime.now());
         country.setCreatedBy(UserStatics.getCurrentUserName());
@@ -191,7 +212,7 @@ public class CustomerService implements ICustomerService {
     }
 
     private int saveCity(CustomerDto customerDto) throws SQLException {
-        City city = MapCustomerDtoToCity.Map(customerDto);
+        City city = customerDtoToCityMapper.Map(customerDto);
         city.setCreateDate(LocalDateTime.now());
         city.setLastUpdate(LocalDateTime.now());
         city.setCreatedBy(UserStatics.getCurrentUserName());
@@ -202,7 +223,7 @@ public class CustomerService implements ICustomerService {
     }
 
     private int saveAddress(CustomerDto customerDto) throws SQLException {
-        Address address = MapCustomerDtoToAddress.Map(customerDto);
+        Address address = customerDtoToAddressMapper.Map(customerDto);
         address.setCreateDate(LocalDateTime.now());
         address.setCreatedBy(UserStatics.getCurrentUserName());
         address.setLastUpdate(LocalDateTime.now());

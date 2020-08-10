@@ -9,7 +9,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
 <AnchorPane prefHeight="800.0" prefWidth="1000.0" style="-fx-background-color: #63768D;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Main.MainScreenController">
    <children>
       <VBox layoutX="235.0" layoutY="108.0" prefHeight="600.0" prefWidth="531.0">
@@ -85,10 +84,11 @@
             </HBox>
          </children>
       </VBox>
-      <Button fx:id="btnLogout" layoutX="885.0" layoutY="34.0" mnemonicParsing="false" onAction="#onActionBtnLogout" style="-fx-background-color: FDFFF7;" text="Logout">
+      <Button fx:id="btnLogout" layoutX="895.0" layoutY="77.0" mnemonicParsing="false" onAction="#onActionBtnLogout" style="-fx-background-color: FDFFF7;" text="Logout">
          <font>
             <Font name="Segoe UI" size="16.0" />
          </font>
       </Button>
+      <Button fx:id="btnUserAdministration" layoutX="819.0" layoutY="27.0" mnemonicParsing="false" onAction="#onActionBtnUserAdministration" style="-fx-background-color: #FDFFF7;" text="User Administration" />
    </children>
 </AnchorPane>

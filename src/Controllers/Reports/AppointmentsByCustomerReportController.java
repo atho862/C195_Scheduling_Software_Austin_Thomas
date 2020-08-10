@@ -4,10 +4,12 @@ import Contracts.Interfaces.Repositories.ICustomerRepository;
 import Contracts.Interfaces.Services.IAppointmentService;
 import Contracts.Interfaces.Services.ILoginService;
 import Contracts.Interfaces.Services.INavigationService;
+import Contracts.Interfaces.Services.IReportsService;
 import Domain.Dtos.AppointmentDto;
 import Domain.Services.AppointmentService;
 import Domain.Services.LoginService;
 import Domain.Services.NavigationService;
+import Domain.Services.ReportsService;
 import Infrastructure.Models.Appointment;
 import Infrastructure.Models.Customer;
 import Infrastructure.Repositories.CustomerRepository;
@@ -31,6 +33,7 @@ public class AppointmentsByCustomerReportController implements Initializable {
     IAppointmentService appointmentService = new AppointmentService();
     ICustomerRepository customerRepository = new CustomerRepository();
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm");
+    IReportsService reportsService = new ReportsService();
 
     @FXML
     private TableColumn<AppointmentDto, String> tblColumnType;
@@ -40,6 +43,9 @@ public class AppointmentsByCustomerReportController implements Initializable {
 
     @FXML
     private Button btnLogout;
+
+    @FXML
+    private Button btnExportToExcel;
 
     @FXML
     private ComboBox<String> choiceBoxCustomer;
@@ -73,6 +79,16 @@ public class AppointmentsByCustomerReportController implements Initializable {
     void onAction(ActionEvent event) throws SQLException {
         int customerId = customerRepository.getCustomerIdByCustomerName(choiceBoxCustomer.getValue());
         tblAppointments.setItems(appointmentService.getAppointmentsForCustomer(customerId));
+    }
+
+    @FXML
+    void onActionBtnExportToExcel(ActionEvent event){
+        if (tblAppointments.getItems().size() < 1){
+            new Alert(Alert.AlertType.WARNING, "Unable to generate a report for a customer with 0 appointments. Please select a customer that has appointments").show();
+            return;
+        }
+        reportsService.exportAppointmentsByCustomerReportToExcel(choiceBoxCustomer.getValue(), tblAppointments.getItems());
+        new Alert(Alert.AlertType.CONFIRMATION, "Report successfully exported to Excel!").show();
     }
 
     @Override

@@ -8,7 +8,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
 <AnchorPane prefHeight="800.0" prefWidth="1000.0" style="-fx-background-color: #63768D;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Customer.CustomerListController">
    <children>
       <HBox layoutY="8.0" prefHeight="64.0" prefWidth="1000.0">
@@ -85,6 +84,20 @@
                         <Font name="Segoe UI" size="18.0" />
                      </font>
                   </Button>
+               </children>
+            </HBox>
+         </children>
+      </HBox>
+      <HBox layoutX="57.0" layoutY="105.0" prefHeight="51.0" prefWidth="889.0">
+         <children>
+            <HBox alignment="CENTER" prefHeight="51.0" prefWidth="274.0">
+               <children>
+                  <TextField fx:id="txtSearch" maxHeight="35.0" minHeight="0.0" prefHeight="35.0" prefWidth="200.0" promptText="Search by Customer Name" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="51.0" prefWidth="131.0">
+               <children>
+                  <Button fx:id="btnSearch" mnemonicParsing="false" onAction="#onActionBtnSearch" style="-fx-background-color: FDFFF7;" text="Search" />
                </children>
             </HBox>
          </children>

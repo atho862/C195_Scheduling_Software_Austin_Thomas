@@ -13,4 +13,5 @@ public interface IAppointmentService {
     int deleteAppointment(int appointmentId) throws SQLException;
     ObservableList<AppointmentDto> getAppointmentsForCustomer(int customerId) throws SQLException;
     boolean checkForUpcomingAppointments() throws SQLException;
+    ObservableList<AppointmentDto> searchAppointmentsByTitle(String searchText) throws SQLException;
 }

@@ -9,6 +9,7 @@ import Domain.Services.CustomerService;
 import Domain.Services.LoginService;
 import Domain.Services.NavigationService;
 import com.sun.org.apache.xpath.internal.operations.Bool;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -54,6 +55,12 @@ public class CustomerListController implements Initializable {
     private TableColumn<CustomerDto, Boolean> tblColumnActive;
 
     @FXML
+    private TextField txtSearch;
+
+    @FXML
+    private Button btnSearch;
+
+    @FXML
     void onActionBtnBack(ActionEvent event) throws IOException {
         navigationService.navigateToMainScreen(event);
     }
@@ -90,6 +97,25 @@ public class CustomerListController implements Initializable {
         }
 
         tblCustomers.setItems(customerService.getAllCustomers());
+    }
+
+    @FXML
+    void onActionBtnSearch(ActionEvent event){
+        String searchText = txtSearch.getText();
+        if (searchText.trim().isEmpty()){
+            new Alert(Alert.AlertType.ERROR, "Search text cannot be empty").show();
+            return;
+        }
+        try {
+            ObservableList<CustomerDto> filteredCustomers = customerService.searchCustomersByCustomerName(searchText);
+            tblCustomers.setItems(filteredCustomers);
+        }
+        catch (Exception e){
+            System.out.println(e);
+            new Alert(Alert.AlertType.ERROR, "There was a problem searching customers. Please try again.").show();
+            return;
+        }
+
     }
 
     @Override

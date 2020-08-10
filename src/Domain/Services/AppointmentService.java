@@ -21,14 +21,16 @@ public class AppointmentService implements IAppointmentService {
 
     IAppointmentRepository appointmentRepository = new AppointmentRepository();
     ICustomerRepository customerRepository = new CustomerRepository();
+    MapAppointmentToAppointmentDto appointmentToAppointmentDtoMapper = new MapAppointmentToAppointmentDto();
+    MapAppointmentDtoToAppointment appointmentDtoToAppointmentMapper = new MapAppointmentDtoToAppointment();
 
     @Override
     public int saveAppointment(AppointmentDto appointmentDto) throws SQLException {
-        Appointment appointment = MapAppointmentDtoToAppointment.Map(appointmentDto);
+        Appointment appointment = appointmentDtoToAppointmentMapper.Map(appointmentDto);
         appointment.setCreateDate(AppointmentHelper.convertToUtc(LocalDateTime.now()));
         appointment.setLastUpdate(AppointmentHelper.convertToUtc(LocalDateTime.now()));
         appointment.setCreatedBy(UserStatics.getCurrentUserName());
-        appointment.setLastUpdatedBy(UserStatics.getCurrentUserName());
+        appointment.setLastUpdateBy(UserStatics.getCurrentUserName());
         appointment.setCustomerId(customerRepository.getCustomerIdByCustomerName(appointmentDto.getCustomerName()));
 
         int affectedAppointments = appointmentRepository.insertAppointment(appointment);
@@ -41,7 +43,7 @@ public class AppointmentService implements IAppointmentService {
         ObservableList<AppointmentDto> appointmentDtos = FXCollections.observableArrayList();
         for (Appointment appointment : appointments
              ) {
-            AppointmentDto appointmentDto = MapAppointmentToAppointmentDto.Map(appointment);
+            AppointmentDto appointmentDto = appointmentToAppointmentDtoMapper.Map(appointment);
             appointmentDto.setCustomerName(customerRepository.getCustomerNameById(appointment.getCustomerId()));
             appointmentDtos.add(appointmentDto);
         }
@@ -55,8 +57,8 @@ public class AppointmentService implements IAppointmentService {
 
     @Override
     public int updateAppointment(AppointmentDto appointmentDto) throws SQLException {
-        Appointment appointment = MapAppointmentDtoToAppointment.Map(appointmentDto);
-        appointment.setLastUpdatedBy(UserStatics.getCurrentUserName());
+        Appointment appointment = appointmentDtoToAppointmentMapper.Map(appointmentDto);
+        appointment.setLastUpdateBy(UserStatics.getCurrentUserName());
         appointment.setLastUpdate(AppointmentHelper.convertToUtc(LocalDateTime.now()));
         int updatedAppointments = appointmentRepository.updateAppointment(appointment);
         return updatedAppointments;
@@ -74,7 +76,7 @@ public class AppointmentService implements IAppointmentService {
         ObservableList<AppointmentDto> appointmentDtos = FXCollections.observableArrayList();
         for (Appointment appointment : appointments
              ) {
-            AppointmentDto appointmentDto = MapAppointmentToAppointmentDto.Map(appointment);
+            AppointmentDto appointmentDto = appointmentToAppointmentDtoMapper.Map(appointment);
             appointmentDtos.add(appointmentDto);
         }
 
@@ -95,5 +97,19 @@ public class AppointmentService implements IAppointmentService {
         }
 
         return hasUpcomingAppointment;
+    }
+
+    @Override
+    public ObservableList<AppointmentDto> searchAppointmentsByTitle(String searchText) throws SQLException {
+        ObservableList<AppointmentDto> appointmentDtos = FXCollections.observableArrayList();
+        ObservableList<Appointment> appointments = appointmentRepository.getAppointmentsByUserId(UserStatics.getCurrentUserId());
+        for (Appointment appointment : appointments) {
+            if (appointment.getTitle().contains(searchText)){
+                AppointmentDto appointmentDto = appointmentToAppointmentDtoMapper.Map(appointment);
+                appointmentDtos.add(appointmentDto);
+            }
+        }
+
+        return appointmentDtos;
     }
 }

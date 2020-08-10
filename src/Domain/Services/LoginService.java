@@ -1,6 +1,7 @@
 package Domain.Services;
 
 import Contracts.Interfaces.Services.IAppointmentService;
+import Contracts.Statics.RoleStatics;
 import Domain.Dtos.LoginDto;
 import Contracts.Interfaces.Repositories.IUserRepository;
 import Contracts.Interfaces.Services.ILoginService;
@@ -34,6 +35,8 @@ public class LoginService implements ILoginService {
             isValidLogin = true;
             setCurrentUserId(user.getUserId());
             setCurrentUserName(user.getUserName());
+            RoleStatics.getRoles();
+            UserStatics.setCurrentUserRoleId(user.getRoleId());
             FileWriter writer = new FileWriter("LoginHistory.txt", true);
             writer.append("User: " + user.getUserName() + " logged in at " + LocalDateTime.now() + System.lineSeparator());
             writer.close();

@@ -7,7 +7,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
 <AnchorPane prefHeight="800.0" prefWidth="1000.0" style="-fx-background-color: #63768D;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Reports.AppointmentsByCustomerReportController">
    <children>
       <HBox layoutX="14.0" layoutY="14.0" prefHeight="69.0" prefWidth="970.0">
@@ -50,33 +49,34 @@
          <children>
             <HBox alignment="CENTER" prefHeight="73.0" prefWidth="897.0">
                <children>
-                  <HBox prefHeight="70.0" prefWidth="504.0">
+                  <GridPane prefHeight="70.0" prefWidth="503.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="304.0" minWidth="10.0" prefWidth="122.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="446.0" minWidth="10.0" prefWidth="326.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
                      <children>
-                        <GridPane prefHeight="70.0" prefWidth="503.0">
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="304.0" minWidth="10.0" prefWidth="137.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="446.0" minWidth="10.0" prefWidth="430.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
+                        <HBox alignment="CENTER" prefHeight="70.0" prefWidth="126.0">
                            <children>
-                              <HBox alignment="CENTER" prefHeight="70.0" prefWidth="126.0">
-                                 <children>
-                                    <Label fx:id="lblCustomer" text="Customer" textFill="#fdfff7">
-                                       <font>
-                                          <Font name="System Bold" size="18.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </HBox>
-                              <HBox alignment="CENTER" prefHeight="70.0" prefWidth="412.0" GridPane.columnIndex="1">
-                                 <children>
-                                    <ComboBox fx:id="choiceBoxCustomer" onAction="#onAction" prefHeight="31.0" prefWidth="348.0" style="-fx-background-color: #FDFFF7;" />
-                                 </children>
-                              </HBox>
+                              <Label fx:id="lblCustomer" text="Customer" textFill="#fdfff7">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Label>
                            </children>
-                        </GridPane>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="70.0" prefWidth="412.0" GridPane.columnIndex="1">
+                           <children>
+                              <ComboBox fx:id="choiceBoxCustomer" onAction="#onAction" prefHeight="31.0" prefWidth="348.0" style="-fx-background-color: #FDFFF7;" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </GridPane>
+                  <HBox alignment="CENTER" prefHeight="70.0" prefWidth="504.0">
+                     <children>
+                        <Button fx:id="btnExportToExcel" mnemonicParsing="false" onAction="#onActionBtnExportToExcel" style="-fx-background-color: FDFFF7;" text="Export To Excel" />
                      </children>
                   </HBox>
                </children>

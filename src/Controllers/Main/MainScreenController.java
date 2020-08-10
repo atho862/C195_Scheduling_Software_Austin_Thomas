@@ -2,6 +2,8 @@ package Controllers.Main;
 
 import Contracts.Interfaces.Services.ILoginService;
 import Contracts.Interfaces.Services.INavigationService;
+import Contracts.Statics.RoleStatics;
+import Contracts.Statics.UserStatics;
 import Domain.Services.LoginService;
 import Domain.Services.NavigationService;
 import javafx.event.ActionEvent;
@@ -15,6 +17,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -48,6 +51,9 @@ public class MainScreenController implements Initializable {
     private Button btnAppointments;
 
     @FXML
+    private Button btnUserAdministration;
+
+    @FXML
     void onActionBtnAppointments(ActionEvent event) throws IOException {
         stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
         root = FXMLLoader.load(getClass().getResource("/Views/Appointment/AppointmentList.fxml"));
@@ -71,11 +77,21 @@ public class MainScreenController implements Initializable {
         loginService.logout(event);
     }
 
+    @FXML
+    void onActionBtnUserAdministration(ActionEvent event) throws IOException {
+        navigationService.navigateToUserListScreen(event);
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Image appointmentsImage = new Image("/Assets/calendar.png");
         Image customersImage = new Image("/Assets/customer.png");
         Image reportsImage = new Image("/Assets/reports.png");
+
+        String currentRoleName = RoleStatics.getRoleByRoleId(UserStatics.getCurrentUserRoleId()).getRoleName();
+        if (!currentRoleName.equals("Administrator")){
+            btnUserAdministration.setVisible(false);
+        }
 
         imgViewAppointments.setImage(appointmentsImage);
         imgViewCustomers.setImage(customersImage);

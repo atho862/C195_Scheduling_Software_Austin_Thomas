@@ -3,36 +3,25 @@ package Infrastructure.Models;
 import java.time.LocalDateTime;
 import java.util.Date;
 
-public class Customer {
+public class Customer extends BaseModel{
     private int customerId;
     private String customerName;
     private int addressId;
     private boolean active;
-    private LocalDateTime createDate;
-    private String createdBy;
-    private LocalDateTime lastUpdate;
-    private String lastUpdateBy;
 
     public Customer(int customerId, String customerName, int addressId, boolean isActive, LocalDateTime createDate, String createdBy,
                     LocalDateTime lastUpdate, String lastUpdateBy){
+        super(createDate, createdBy, lastUpdate, lastUpdateBy);
         this.customerId = customerId;
         this.customerName = customerName;
         this.addressId = addressId;
         this.active = isActive;
-        this.createDate = createDate;
-        this.createdBy = createdBy;
-        this.lastUpdate = lastUpdate;
-        this.lastUpdateBy = lastUpdateBy;
     }
 
     public int getCustomerId(){ return this.customerId; }
     public String getCustomerName() { return this.customerName; }
     public int getAddressId() { return this.addressId; }
     public boolean isActive() { return this.active; }
-    public LocalDateTime getCreateDate() { return this.createDate; }
-    public String getCreatedBy() { return this.createdBy; }
-    public LocalDateTime getLastUpdate() { return this.lastUpdate; }
-    public String getLastUpdateBy() { return this.lastUpdateBy; }
 
     public void setCustomerId(int customerId){
         this.customerId = customerId;
@@ -50,19 +39,4 @@ public class Customer {
         this.active = isActive;
     }
 
-    public void setCreateDate(LocalDateTime createDate){
-        this.createDate = createDate;
-    }
-
-    public void setCreatedBy(String createdBy){
-        this.createdBy = createdBy;
-    }
-
-    public void setLastUpdate(LocalDateTime lastUpdate){
-        this.lastUpdate = lastUpdate;
-    }
-
-    public void setLastUpdateBy(String lastUpdateBy){
-        this.lastUpdateBy = lastUpdateBy;
-    }
 }

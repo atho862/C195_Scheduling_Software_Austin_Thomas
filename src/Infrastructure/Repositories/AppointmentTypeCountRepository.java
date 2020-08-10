@@ -15,7 +15,7 @@ public class AppointmentTypeCountRepository implements IAppointmentTypeCountRepo
     public ObservableList<AppointmentTypeCountDto> getAppointmentTypeCountsByMonth(int month) throws SQLException {
         ObservableList<AppointmentTypeCountDto> appointmentTypeCounts = FXCollections.observableArrayList();
         PreparedStatement statement = (PreparedStatement) DatabaseConnection.dbConnection.prepareStatement(
-                "SELECT type, COUNT(*) AS count FROM appointment WHERE MONTH(start) = ?");
+                "SELECT type, COUNT(*) AS count FROM appointment WHERE MONTH(start) = ? GROUP BY type");
 
         statement.setInt(1, month);
         ResultSet resultSet = statement.executeQuery();

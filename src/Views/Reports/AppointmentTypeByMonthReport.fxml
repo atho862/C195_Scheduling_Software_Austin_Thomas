@@ -87,6 +87,15 @@
                   </TableView>
                </children>
             </HBox>
+            <HBox alignment="CENTER" prefHeight="87.0" prefWidth="590.0">
+               <children>
+                  <HBox alignment="CENTER_RIGHT" prefHeight="79.0" prefWidth="346.0">
+                     <children>
+                        <Button fx:id="btnExportToExcel" mnemonicParsing="false" onAction="#onActionBtnExportToExcel" style="-fx-background-color: FDFFF7;" text="Export to Excel" />
+                     </children>
+                  </HBox>
+               </children>
+            </HBox>
          </children>
       </VBox>
    </children>

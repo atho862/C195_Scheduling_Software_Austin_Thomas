@@ -12,4 +12,5 @@ public interface ICustomerService {
     int addCustomer(CustomerDto customerDto) throws SQLException;
     int updateCustomer(CustomerDto customerDto) throws SQLException;
     int deleteCustomer(int customerId) throws SQLException;
+    ObservableList<CustomerDto> searchCustomersByCustomerName(String searchText) throws SQLException;
 }

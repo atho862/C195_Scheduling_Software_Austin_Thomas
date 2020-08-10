@@ -4,11 +4,13 @@ import Contracts.Interfaces.Repositories.IUserRepository;
 import Contracts.Interfaces.Services.IAppointmentService;
 import Contracts.Interfaces.Services.ILoginService;
 import Contracts.Interfaces.Services.INavigationService;
+import Contracts.Interfaces.Services.IReportsService;
 import Contracts.Statics.UserStatics;
 import Domain.Dtos.AppointmentDto;
 import Domain.Services.AppointmentService;
 import Domain.Services.LoginService;
 import Domain.Services.NavigationService;
+import Domain.Services.ReportsService;
 import Infrastructure.Repositories.UserRepository;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -30,6 +32,7 @@ public class ScheduleByConsultantController implements Initializable {
     ILoginService loginService = new LoginService();
     IUserRepository userRepository = new UserRepository();
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm");
+    IReportsService reportsService = new ReportsService();
 
     @FXML
     private TableColumn<AppointmentDto, String> tblColumnType;
@@ -62,6 +65,9 @@ public class ScheduleByConsultantController implements Initializable {
     private TableColumn<AppointmentDto, String> tblColumnCustomer;
 
     @FXML
+    private Button btnExportToExcel;
+
+    @FXML
     void onActionBtnBack(ActionEvent event) throws IOException {
         navigationService.navigateToReportsScreen(event);
     }
@@ -76,6 +82,16 @@ public class ScheduleByConsultantController implements Initializable {
         String username = comboBoxConsultant.getValue();
         int userId = userRepository.getUserIdByUsername(username);
         tblAppointments.setItems(appointmentService.getAppointmentsForUser(userId));
+    }
+
+    @FXML
+    void onActionBtnExportToExcel(ActionEvent event){
+        if (tblAppointments.getItems().size() < 1){
+            new Alert(Alert.AlertType.WARNING, "Unable to export a report for a consultant with 0 appointments. Please select a consultant with at least one appointment").show();
+            return;
+        }
+        reportsService.exportScheduleByConsultantToExcel(comboBoxConsultant.getValue(), tblAppointments.getItems());
+        new Alert(Alert.AlertType.CONFIRMATION, "Report successfully exported to Excel!").show();
     }
 
     @Override

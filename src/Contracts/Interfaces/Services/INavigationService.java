@@ -19,4 +19,6 @@ public interface INavigationService {
     void navigateToAppointmentTypeByMonthScreen(ActionEvent event) throws IOException;
     void navigateToScheduleByConsultantScreen(ActionEvent event) throws IOException;
     void navigateToAppointmentsByCustomerScreen(ActionEvent event) throws IOException;
+    void navigateToUserListScreen(ActionEvent event) throws IOException;
+    void navigateToAddEditUserScreen(ActionEvent event, FXMLLoader loader) throws IOException;
 }

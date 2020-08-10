@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane prefHeight="800.0" prefWidth="1000.0" style="-fx-background-color: #63768D;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.User.UserListController">
+   <children>
+      <HBox layoutX="14.0" layoutY="7.0" prefHeight="60.0" prefWidth="976.0">
+         <children>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="btnBack" mnemonicParsing="false" onAction="#onActionBtnBack" style="-fx-background-color: #FDFFF7;" text="Back">
+                     <font>
+                        <Font name="Segoe UI" size="18.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox prefHeight="60.0" prefWidth="557.0" />
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="btnLogout" mnemonicParsing="false" onAction="#onActionBtnLogout" style="-fx-background-color: #FDFFF7;" text="Logout">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+      </HBox>
+      <TableView fx:id="tblViewUsers" layoutX="55.0" layoutY="205.0" prefHeight="443.0" prefWidth="891.0">
+        <columns>
+          <TableColumn fx:id="tblColumnName" prefWidth="221.0" text="Name" />
+          <TableColumn fx:id="tblColumnUsername" minWidth="0.0" prefWidth="299.0" text="Username" />
+            <TableColumn fx:id="tblColumnRole" minWidth="0.0" prefWidth="201.0" text="Role" />
+            <TableColumn fx:id="tblColumnActive" minWidth="0.0" prefWidth="169.0" text="Active?" />
+        </columns>
+      </TableView>
+      <HBox layoutX="57.0" layoutY="134.0" prefHeight="51.0" prefWidth="891.0">
+         <children>
+            <HBox prefHeight="51.0" prefWidth="859.0">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label />
+                        <TextField fx:id="txtSearch" promptText="Search by Name"/>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="51.0" prefWidth="84.0">
+                     <children>
+                        <Button fx:id="btnSearch" mnemonicParsing="false" onAction="#onActionBtnSearch" style="-fx-background-color: #FDFFF7;" text="Search" />
+                     </children>
+                  </HBox>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" prefHeight="51.0" prefWidth="246.0">
+               <children>
+                  <ComboBox fx:id="cmboBoxRoles" onAction="#onActionCmboBoxRoles" prefWidth="150.0" promptText="All Users" style="-fx-background-color: #FDFFF7;" />
+               </children>
+            </HBox>
+         </children>
+      </HBox>
+      <HBox layoutX="55.0" layoutY="661.0" prefHeight="60.0" prefWidth="891.0">
+         <children>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="btnAddUser" mnemonicParsing="false" onAction="#onActionBtnAddUser" style="-fx-background-color: #FDFFF7;" text="Add User">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="btnEditUser" mnemonicParsing="false" onAction="#onActionBtnEditUser" style="-fx-background-color: #FDFFF7;" text="Edit User">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox prefHeight="60.0" prefWidth="315.0" />
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="btnDeleteUser" mnemonicParsing="false" onAction="#onActionBtnDeleteUser" style="-fx-background-color: #FDFFF7;" text="Delete User">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+      </HBox>
+      <Label layoutX="457.0" layoutY="46.0" text="Users">
+         <font>
+            <Font name="Segoe UI Bold Italic" size="36.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
