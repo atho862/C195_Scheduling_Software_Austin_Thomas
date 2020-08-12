@@ -8,7 +8,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
 <AnchorPane prefHeight="800.0" prefWidth="1000.0" style="-fx-background-color: #63768D;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.User.AddEditUserController">
    <children>
       <HBox layoutX="14.0" layoutY="14.0" prefHeight="59.0" prefWidth="971.0">
@@ -28,7 +27,7 @@
       </HBox>
       <HBox alignment="CENTER" layoutX="400.0" layoutY="73.0" prefHeight="59.0" prefWidth="200.0">
          <children>
-            <Label text="Add User">
+            <Label fx:id="lblTitle" text="Add User">
                <font>
                   <Font name="Segoe UI Bold Italic" size="36.0" />
                </font>

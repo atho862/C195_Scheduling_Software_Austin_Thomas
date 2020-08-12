@@ -49,6 +49,9 @@ public class AddEditUserController implements Initializable {
     private PasswordField txtConfirmPassword;
 
     @FXML
+    private Label lblTitle;
+
+    @FXML
     void onActionBtnBack(ActionEvent event) throws IOException {
         Alert alert = new Alert(Alert.AlertType.WARNING, "Are you sure you want to leave this page? Any unsaved information will be lost!",
                 ButtonType.YES, ButtonType.NO);
@@ -129,12 +132,16 @@ public class AddEditUserController implements Initializable {
             chcBoxActive.setValue("No");
         }
         chcBoxRole.setValue(user.getRoleName());
+        lblTitle.setText("Edit User");
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initActiveChoiceBox();
         initRoleChoicebox();
+        if (userId != 0){
+            lblTitle.setText("Edit User");
+        }
     }
 
     private void initActiveChoiceBox(){

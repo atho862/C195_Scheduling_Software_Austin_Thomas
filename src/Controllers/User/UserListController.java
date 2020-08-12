@@ -129,6 +129,11 @@ public class UserListController implements Initializable {
             new Alert(Alert.AlertType.ERROR, "Please select an existing user to delete").show();
             return;
         }
+        Alert alert = new Alert(Alert.AlertType.WARNING, "Are you sure you want to delete " + userDto.getName() + "? This action cannot be undone", ButtonType.YES, ButtonType.NO);
+        alert.showAndWait();
+        if (alert.getResult() == ButtonType.NO){
+            return;
+        }
         try {
             userService.deleteUser(userDto);
         }
